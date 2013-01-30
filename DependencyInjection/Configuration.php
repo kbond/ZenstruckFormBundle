@@ -1,0 +1,31 @@
+<?php
+
+namespace Zenstruck\Bundle\FormBundle\DependencyInjection;
+
+use Symfony\Component\Config\Definition\Builder\TreeBuilder;
+use Symfony\Component\Config\Definition\ConfigurationInterface;
+
+/**
+ * @author Kevin Bond <kevinbond@gmail.com>
+ */
+class Configuration implements ConfigurationInterface
+{
+    public function getConfigTreeBuilder()
+    {
+        $treeBuilder = new TreeBuilder();
+        $rootNode = $treeBuilder->root('zenstruck_form');
+
+        $rootNode
+            ->children()
+                ->arrayNode('form_types')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->booleanNode('help')->defaultFalse()->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+
+        return $treeBuilder;
+    }
+}

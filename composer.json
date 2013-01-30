@@ -1,0 +1,22 @@
+{
+    "name": "zenstruck/form-bundle",
+    "description": "Provides Twitter Bootstrap form theme, useful FormType Extensions and javascript helpers",
+    "keywords": ["form"],
+    "homepage": "http://zenstruck.com/project/ZenstruckFormBundle",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kevin Bond",
+            "email": "kevinbond@gmail.com"
+        }
+    ],
+    "require": {
+        "symfony/framework-bundle" : "2.1.*",
+        "symfony/form" : "2.1.*"
+    },
+    "autoload": {
+        "psr-0": { "Zenstruck\\Bundle\\FormBundle": "" }
+    },
+    "target-dir": "Zenstruck/Bundle/FormBundle"
+}
