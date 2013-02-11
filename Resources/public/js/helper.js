@@ -57,8 +57,51 @@ var ZenstruckFormHelper = {
         });
     },
 
+    /**
+     * Initializes the AjaxEntity Select2 widget
+     */
+    initSelect2: function() {
+        if(!jQuery().select2) {
+            return;
+        }
+
+        var ZenstruckSelect2Options = {
+            minimumInputLength: 1,
+            allowClear: true,
+            placeholder: function(element) {
+                return $(element).data('placeholder');
+            },
+            initSelection : function (element, callback) {
+                var val = $(element).val();
+
+                if (val) {
+                    callback({
+                        id: val,
+                        text: $(element).data('title')
+                    });
+                }
+            },
+            ajax: {
+                dataType: 'json',
+                data: function (term, page) {
+                    return {
+                        q: term
+                    }
+                },
+                results: function (data, page) {
+                    console.log(data);
+                    return { results: data }
+                }
+            }
+        };
+
+        $('.zenstruck-ajax-entity').select2(ZenstruckSelect2Options);
+        $('.zenstruck-ajax-entity-required').select2($.extend(ZenstruckSelect2Options, { allowClear: false }));
+    },
+
     initialize: function() {
         this.initFormCollectionHelper();
         this.initPostLinkHelper();
+        this.initSelect2();
     }
 };

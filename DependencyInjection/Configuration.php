@@ -21,6 +21,8 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->booleanNode('help')->defaultFalse()->end()
+                        ->booleanNode('ajax_entity')->defaultFalse()->end()
+                        ->booleanNode('ajax_entity_controller')->defaultFalse()->end()
                     ->end()
                 ->end()
             ->end()

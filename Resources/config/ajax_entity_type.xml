@@ -1,0 +1,26 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="zenstruck_form.ajax_entity_type.class">Zenstruck\Bundle\FormBundle\Form\Type\AjaxEntityType</parameter>
+        <parameter key="zenstruck_form.ajax_entity_manager.class">Zenstruck\Bundle\FormBundle\Form\AjaxEntityManager</parameter>
+    </parameters>
+
+    <services>
+        <service id="zenstruck_form.ajax_entity_manager" class="%zenstruck_form.ajax_entity_manager.class%">
+            <argument type="service" id="doctrine" />
+            <argument type="service" id="router" />
+            <argument>%kernel.secret%</argument>
+            <argument />
+        </service>
+
+        <service id="zenstruck_form.ajax_entity_type" class="%zenstruck_form.ajax_entity_type.class%">
+            <argument type="service" id="doctrine" />
+            <argument type="service" id="zenstruck_form.ajax_entity_manager" />
+            <tag name="form.type" alias="zenstruck_ajax_entity" />
+        </service>
+    </services>
+</container>
