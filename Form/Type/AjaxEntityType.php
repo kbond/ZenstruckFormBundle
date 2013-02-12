@@ -12,6 +12,7 @@ use Symfony\Component\OptionsResolver\Exception\MissingOptionsException;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Zenstruck\Bundle\FormBundle\Form\AjaxEntityManager;
 use Zenstruck\Bundle\FormBundle\Form\DataTransformer\AjaxEntityTransformer;
+use Zenstruck\Bundle\FormBundle\Form\DataTransformer\AjaxEntitiesTransformer;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
@@ -29,7 +30,8 @@ class AjaxEntityType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $transformer = new AjaxEntityTransformer($this->registry, $options['class'], $options['separator']);
+        $transformer = new AjaxEntityTransformer($this->registry, $options['class'], $options['multiple']);
+
         $builder->addViewTransformer($transformer);
 
         if ($options['use_controller']) {
@@ -48,35 +50,43 @@ class AjaxEntityType extends AbstractType
             }
         }
 
-        $builder->setAttribute('separator', $options['separator']);
         $builder->setAttribute('placeholder', $options['placeholder']);
         $builder->setAttribute('url', $options['url']);
         $builder->setAttribute('use_controller', $options['use_controller']);
+        $builder->setAttribute('multiple', $options['multiple']);
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $value = $view->vars['value'];
-        $separator = $form->getConfig()->getAttribute('separator');
         $url = $form->getConfig()->getAttribute('url');
         $useController = $form->getConfig()->getAttribute('use_controller');
+        $multiple = $form->getConfig()->getAttribute('multiple');
 
         if ($value) {
-            $data = explode($separator, $value);
-            $view->vars['value'] = $data[0];
-            $view->vars['attr']['data-title'] = $data[1];
+            if ($multiple) {
+                // build id string
+                $ids = array();
+                foreach ($value as $entity) {
+                    $ids[] = $entity['id'];
+                }
+                $view->vars['value'] = implode(',', $ids);
+            } else {
+                $view->vars['value'] = $value['id'];
+            }
+
+            $view->vars['attr']['data-initial'] = json_encode($value);
         }
 
         if ($useController || $url) {
             $view->vars['attr']['data-ajax-url'] = $url;
-
-            $class = 'zenstruck-ajax-entity' . ($view->vars['required'] ? '-required' : '');
+            $class = 'zenstruck-ajax-entity';
 
             if (isset($view->vars['attr']['class'])) {
                 $class = $view->vars['attr']['class'] . ' ' . $class;
             }
 
-            $view->vars['attr']['class'] = $class;
+            $view->vars['attr']['class'] = $class . ($multiple ? ' multiple' : '');
         }
 
         $view->vars['attr']['data-placeholder'] = $form->getConfig()->getAttribute('placeholder');
@@ -86,12 +96,12 @@ class AjaxEntityType extends AbstractType
     {
         $resolver->setRequired(array('class'));
         $resolver->setDefaults(array(
-                'separator'     => '|',
                 'placeholder'   => 'Choose an option',
                 'use_controller'=> false,
                 'url'           => null,
                 'method'        => null,
-                'property'      => null
+                'property'      => null,
+                'multiple'      => false
             ));
     }
 

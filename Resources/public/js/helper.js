@@ -65,38 +65,49 @@ var ZenstruckFormHelper = {
             return;
         }
 
-        var ZenstruckSelect2Options = {
-            minimumInputLength: 1,
-            allowClear: true,
-            placeholder: function(element) {
-                return $(element).data('placeholder');
-            },
-            initSelection : function (element, callback) {
-                var val = $(element).val();
+        $('.zenstruck-ajax-entity').each(function() {
+            var $this = $(this);
+            var required = $this.attr('required');
+            var multiple = $this.hasClass('multiple');
 
-                if (val) {
-                    callback({
-                        id: val,
-                        text: $(element).data('title')
-                    });
-                }
-            },
-            ajax: {
-                dataType: 'json',
-                data: function (term, page) {
-                    return {
-                        q: term
+            var options = {
+                minimumInputLength: 1,
+                allowClear: !required,
+                multiple: multiple,
+                placeholder: function(element) {
+                    return $(element).data('placeholder');
+                },
+                initSelection : function (element, callback) {
+                    var initialData = $(element).data('initial');
+                    console.log(initialData);
+                    if (initialData) {
+                        callback(initialData);
                     }
                 },
-                results: function (data, page) {
-                    console.log(data);
-                    return { results: data }
+                ajax: {
+                    dataType: 'json',
+                    data: function (term) {
+                        return {
+                            q: term
+                        }
+                    },
+                    results: function (data) {
+                        return { results: data }
+                    }
                 }
-            }
-        };
+            };
 
-        $('.zenstruck-ajax-entity').select2(ZenstruckSelect2Options);
-        $('.zenstruck-ajax-entity-required').select2($.extend(ZenstruckSelect2Options, { allowClear: false }));
+            $(this).select2(options);
+
+            if (multiple) {
+                $(this).on('change', function(e) {
+                    if (e.removed) {
+                        var re = new RegExp(e.removed.id, 'g');
+                        $this.val($this.val().replace(re, ''));
+                    }
+                });
+            }
+        });
     },
 
     initialize: function() {
