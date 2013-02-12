@@ -100,13 +100,6 @@
 
 {% block zenstruck_ajax_entity_widget %}
     {% spaceless %}
-        {% if value is not empty %}
-            {% set data = value|split(separator) %}
-            {% set value = data.0 %}
-            {% set attr = attr|merge({'data-title': data.1 }) %}
-        {% endif %}
-        {% set class = 'zenstruck-ajax-entity' ~ (required ? '-required' : '') %}
-        {% set attr = attr|merge({'class': class, 'data-ajax-url': url, 'data-placeholder': placeholder}) %}
         <input type="hidden" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
     {% endspaceless %}
 {% endblock %}
