@@ -12,7 +12,6 @@ use Symfony\Component\OptionsResolver\Exception\MissingOptionsException;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Zenstruck\Bundle\FormBundle\Form\AjaxEntityManager;
 use Zenstruck\Bundle\FormBundle\Form\DataTransformer\AjaxEntityTransformer;
-use Zenstruck\Bundle\FormBundle\Form\DataTransformer\AjaxEntitiesTransformer;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>

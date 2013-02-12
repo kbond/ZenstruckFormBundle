@@ -60,7 +60,7 @@ var ZenstruckFormHelper = {
     /**
      * Initializes the AjaxEntity Select2 widget
      */
-    initSelect2: function() {
+    initSelect2Helper: function() {
         if(!jQuery().select2) {
             return;
         }
@@ -113,6 +113,6 @@ var ZenstruckFormHelper = {
     initialize: function() {
         this.initFormCollectionHelper();
         this.initPostLinkHelper();
-        this.initSelect2();
+        this.initSelect2Helper();
     }
 };

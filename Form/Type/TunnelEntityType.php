@@ -25,26 +25,24 @@ class TunnelEntityType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $transformer = new AjaxEntityTransformer($this->registry, $options['class'], $options['separator']);
+        $transformer = new AjaxEntityTransformer($this->registry, $options['class'], false);
         $builder->addViewTransformer($transformer);
 
-        $builder->setAttribute('separator', $options['separator']);
         $builder->setAttribute('button_text', $options['button_text']);
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $value = $view->vars['value'];
-        $separator = $form->getConfig()->getAttribute('separator');
 
         if ($value) {
-            $data = explode($separator, $value);
-            $view->vars['value'] = $data[0];
-            $view->vars['title'] = $data[1];
+            $view->vars['value'] = $value['id'];
+            $view->vars['title'] = $value['text'];
         } else {
             $view->vars['title'] = '';
         }
 
+        $view->vars['attr']['class'] = 'zenstruck-tunnel-id';
         $view->vars['button_text'] = $form->getConfig()->getAttribute('button_text');
     }
 
@@ -52,7 +50,6 @@ class TunnelEntityType extends AbstractType
     {
         $resolver->setRequired(array('class'));
         $resolver->setDefaults(array(
-                'separator'     => '|',
                 'button_text'   => 'Select...'
             ));
     }
