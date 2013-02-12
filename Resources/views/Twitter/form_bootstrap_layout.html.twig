@@ -103,3 +103,17 @@
         <input type="hidden" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
     {% endspaceless %}
 {% endblock %}
+
+{% block zenstruck_tunnel_entity_widget %}
+    {% spaceless %}
+        <div class="input-append zenstruck-tunnel-widget">
+            <input type="hidden" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+            <span class="uneditable-input">{{ title }}</span>
+            {% if not required %}
+                <a href="#" class="btn zenstruck-tunnel-clear"><b class="icon-remove"></b></a>
+            {% endif %}
+            <a href="#" class="btn zenstruck-tunnel-select">{{ button_text|trans }}</a>
+        </div>
+
+    {% endspaceless %}
+{% endblock %}
