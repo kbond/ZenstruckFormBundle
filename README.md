@@ -52,6 +52,8 @@ To use, do one of the following:
 
 ### AjaxEntityType
 
+![AjaxEntityType screenshot](https://lh3.googleusercontent.com/-qH5_q34yrjc/URvBEa_eydI/AAAAAAAAKEY/Yywbz7A2OqA/s384/ajax-entity.jpg)
+
 Creates a `1-m` or `m-m` entity association field.  This type simply creates a hidden field that takes
 an either 1 or multiple comma separated entity ids.
 
@@ -180,6 +182,8 @@ Enables the [Select2](http://ivaynberg.github.com/select2/) widget for `AjaxEnti
 Enable with `ZenstruckFormHelper.initSelect2Helper()`
 
 ### TunnelEntityType
+
+![TunnelEntityType screenshot](https://lh3.googleusercontent.com/-G4TtaRInANM/URvBEjb541I/AAAAAAAAKEc/tPOlE47Yj_s/s423/entity-tunnel.jpg)
 
 Creates an entity association field with a select button. A javascript callback for the select button may be defined.
 Can be used for opening a dialog to choose an entity.
