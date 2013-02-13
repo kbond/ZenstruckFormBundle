@@ -112,7 +112,7 @@
             {% if not required %}
                 <a href="#" class="btn zenstruck-tunnel-clear"><b class="icon-remove"></b></a>
             {% endif %}
-            <a href="#" class="btn zenstruck-tunnel-select">{{ button_text|trans }}</a>
+            <a href="#" class="btn zenstruck-tunnel-select"{% if callback %} data-callback="{{ callback }}"{% endif %}>{{ button_text|trans }}</a>
         </div>
     {% endspaceless %}
 {% endblock %}

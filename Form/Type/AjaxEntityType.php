@@ -31,7 +31,7 @@ class AjaxEntityType extends AbstractType
     {
         $transformer = new AjaxEntityTransformer($this->registry, $options['class'], $options['multiple']);
 
-        $builder->addViewTransformer($transformer);
+        $builder->addModelTransformer($transformer);
 
         if ($options['use_controller']) {
             if (!$this->manager->isControllerEnabled()) {

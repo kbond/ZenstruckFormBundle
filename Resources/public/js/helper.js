@@ -79,7 +79,7 @@ var ZenstruckFormHelper = {
                 },
                 initSelection : function (element, callback) {
                     var initialData = $(element).data('initial');
-                    console.log(initialData);
+
                     if (initialData) {
                         callback(initialData);
                     }
@@ -110,9 +110,44 @@ var ZenstruckFormHelper = {
         });
     },
 
+    initTunnelHelper: function() {
+        $('.zenstruck-tunnel-select[data-callback]').click(function(e) {
+            var $this = $(this);
+
+            // create full function name (see http://stackoverflow.com/questions/9228292/javascript-callback-from-form-attribute)
+            var callback = $this.data('callback');
+            var parts = callback.split('.');
+
+            callback = window;
+
+            $(parts).each(function(){
+                callback = callback[this];
+            });
+
+            if (typeof callback === 'function') {
+                var $element = $this.siblings('.zenstruck-tunnel-id');
+                var id = $element.val();
+
+                callback(id, $element);
+            }
+
+            e.preventDefault();
+        });
+
+        $('.zenstruck-tunnel-clear').click(function(e) {
+            $(this)
+                .siblings('.zenstruck-tunnel-id').val('')
+                .siblings('.zenstruck-tunnel-title').html('')
+            ;
+
+            e.preventDefault();
+        });
+    },
+
     initialize: function() {
         this.initFormCollectionHelper();
         this.initPostLinkHelper();
         this.initSelect2Helper();
+        this.initTunnelHelper();
     }
 };
