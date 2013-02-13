@@ -24,20 +24,20 @@ class AjaxEntityTransformer implements DataTransformerInterface
 
     public function transform($value)
     {
-        if (is_object($value)) {
-            if ($value instanceof Collection) {
-                $ret = array();
+        if (is_array($value) || $value instanceof Collection) {
+            $ret = array();
 
-                foreach ($value as $entity) {
-                    $ret[] = array(
-                        'id' => $entity->getId(),
-                        'text' => (string) $entity
-                    );
-                }
-
-                return $ret;
+            foreach ($value as $entity) {
+                $ret[] = array(
+                    'id' => $entity->getId(),
+                    'text' => (string) $entity
+                );
             }
 
+            return $ret;
+        }
+
+        if (is_object($value)) {
             return array(
                 'id' => $value->getId(),
                 'text' => (string) $value

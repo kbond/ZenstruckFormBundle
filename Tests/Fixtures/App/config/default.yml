@@ -1,0 +1,28 @@
+framework:
+    secret: test
+    test: ~
+    session:
+        storage_id: session.storage.filesystem
+    form:            true
+    csrf_protection: false
+    router:   { resource: "%kernel.root_dir%/config/routing.yml" }
+    templating: { engines: ['twig'] }
+    validation:
+        enabled: true
+        enable_annotations: true
+
+twig:
+    debug:            %kernel.debug%
+    strict_variables: %kernel.debug%
+    form:
+        resources:
+            - 'ZenstruckFormBundle:Twitter:form_bootstrap_layout.html.twig'
+
+doctrine:
+    dbal:
+        driver:   pdo_sqlite
+        path:     %kernel.cache_dir%/db.sqlite
+        charset:  UTF8
+    orm:
+        auto_generate_proxy_classes: true
+        auto_mapping: true

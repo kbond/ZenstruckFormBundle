@@ -81,12 +81,12 @@ class AjaxEntityManager
             ));
     }
 
-    protected function encriptString($string)
+    public function encriptString($string)
     {
         return base64_encode($string.$this->secret);
     }
 
-    protected function decriptString($string)
+    public function decriptString($string)
     {
         return str_replace($this->secret, '', base64_decode($string));
     }
