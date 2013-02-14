@@ -10,6 +10,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\Exception\MissingOptionsException;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Routing\Router;
 use Zenstruck\Bundle\FormBundle\Form\AjaxEntityManager;
 use Zenstruck\Bundle\FormBundle\Form\DataTransformer\AjaxEntityTransformer;
 
@@ -19,11 +20,13 @@ use Zenstruck\Bundle\FormBundle\Form\DataTransformer\AjaxEntityTransformer;
 class AjaxEntityType extends AbstractType
 {
     protected $registry;
+    protected $router;
     protected $manager;
 
-    public function __construct(ManagerRegistry $registry, AjaxEntityManager $manager)
+    public function __construct(ManagerRegistry $registry, Router $router, AjaxEntityManager $manager)
     {
         $this->registry = $registry;
+        $this->router = $router;
         $this->manager = $manager;
     }
 
@@ -32,35 +35,14 @@ class AjaxEntityType extends AbstractType
         $transformer = new AjaxEntityTransformer($this->registry, $options['class'], $options['multiple']);
 
         $builder->addModelTransformer($transformer);
-
-        if ($options['use_controller']) {
-            if (!$this->manager->isControllerEnabled()) {
-                throw new MissingOptionsException('Config "zenstruck_form.form_types.ajax_entity_controller" option must be enabled when "use_controller" is true.');
-            }
-
-            if (!$options['property'] && !$options['method']) {
-                throw new MissingOptionsException('Either a property or method option must be set.');
-            }
-
-            if ($options['method']) {
-                $options['url'] = $this->manager->generateMethodUrl($options['class'], $options['method']);
-            } else {
-                $options['url'] = $this->manager->generatePropertyUrl($options['class'], $options['property']);
-            }
-        }
-
-        $builder->setAttribute('placeholder', $options['placeholder']);
-        $builder->setAttribute('url', $options['url']);
-        $builder->setAttribute('use_controller', $options['use_controller']);
-        $builder->setAttribute('multiple', $options['multiple']);
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $value = $view->vars['value'];
-        $url = $form->getConfig()->getAttribute('url');
-        $useController = $form->getConfig()->getAttribute('use_controller');
-        $multiple = $form->getConfig()->getAttribute('multiple');
+        $url = $options['url'];
+        $useController = $options['use_controller'];
+        $multiple = $options['multiple'];
 
         if ($value) {
             if ($multiple) {
@@ -78,7 +60,6 @@ class AjaxEntityType extends AbstractType
         }
 
         if ($useController || $url) {
-            $view->vars['attr']['data-ajax-url'] = $url;
             $class = 'zenstruck-ajax-entity';
 
             if (isset($view->vars['attr']['class'])) {
@@ -86,9 +67,30 @@ class AjaxEntityType extends AbstractType
             }
 
             $view->vars['attr']['class'] = $class . ($multiple ? ' multiple' : '');
+
+            if ($useController) {
+                if (!$this->manager->isControllerEnabled()) {
+                    throw new MissingOptionsException('Config "zenstruck_form.form_types.ajax_entity_controller" option must be enabled when "use_controller" is true.');
+                }
+
+                if (!$options['property'] && !$options['method']) {
+                    throw new MissingOptionsException('Either a property or method option must be set.');
+                }
+
+                if ($options['method']) {
+                    $view->vars['attr']['data-method'] = $this->manager->encriptString($options['method']);
+                } else {
+                    $view->vars['attr']['data-property'] = $this->manager->encriptString($options['property']);
+                }
+
+                $view->vars['attr']['data-entity'] = $this->manager->encriptString($options['class']);
+                $url = $this->router->generate('zenstruck_ajax_entity');
+            }
+
+            $view->vars['attr']['data-ajax-url'] = $url;
         }
 
-        $view->vars['attr']['data-placeholder'] = $form->getConfig()->getAttribute('placeholder');
+        $view->vars['attr']['data-placeholder'] = $options['placeholder'];
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

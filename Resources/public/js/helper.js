@@ -69,6 +69,9 @@ var ZenstruckFormHelper = {
             var $this = $(this);
             var required = $this.attr('required');
             var multiple = $this.hasClass('multiple');
+            var method = $this.data('method');
+            var property = $this.data('property');
+            var entity = $this.data('entity');
 
             var options = {
                 minimumInputLength: 1,
@@ -86,9 +89,13 @@ var ZenstruckFormHelper = {
                 },
                 ajax: {
                     dataType: 'json',
+                    type: 'post',
                     data: function (term) {
                         return {
-                            q: term
+                            q: term,
+                            entity: entity,
+                            property: property,
+                            method: method
                         }
                     },
                     results: function (data) {

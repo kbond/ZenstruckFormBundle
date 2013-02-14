@@ -27,9 +27,6 @@ class TunnelEntityType extends AbstractType
     {
         $transformer = new AjaxEntityTransformer($this->registry, $options['class'], false);
         $builder->addModelTransformer($transformer);
-
-        $builder->setAttribute('button_text', $options['button_text']);
-        $builder->setAttribute('callback', $options['callback']);
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options)
@@ -43,10 +40,9 @@ class TunnelEntityType extends AbstractType
             $view->vars['title'] = '';
         }
 
-
         $view->vars['attr']['class'] = 'zenstruck-tunnel-id';
-        $view->vars['button_text'] = $form->getConfig()->getAttribute('button_text');
-        $view->vars['callback'] = $form->getConfig()->getAttribute('callback');
+        $view->vars['button_text'] = $options['button_text'];
+        $view->vars['callback'] = $options['callback'];
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

@@ -3,7 +3,6 @@
 namespace Zenstruck\Bundle\FormBundle\Form;
 
 use Doctrine\Common\Persistence\ManagerRegistry;
-use Symfony\Component\Routing\Router;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
@@ -11,14 +10,12 @@ use Symfony\Component\Routing\Router;
 class AjaxEntityManager
 {
     protected $registry;
-    protected $router;
     protected $secret;
     protected $controllerEnabled;
 
-    public function __construct(ManagerRegistry $registry, Router $router, $secret, $controllerEnabled = false)
+    public function __construct(ManagerRegistry $registry, $secret, $controllerEnabled = false)
     {
         $this->registry = $registry;
-        $this->router = $router;
         $this->secret = $secret;
         $this->controllerEnabled = $controllerEnabled;
     }
@@ -63,22 +60,6 @@ class AjaxEntityManager
         $dqlQuery->setMaxResults(10);
 
         return $dqlQuery->getResult();
-    }
-
-    public function generatePropertyUrl($className, $property)
-    {
-        return $this->router->generate('zenstruck_ajax_entity_property', array(
-                'entity' => $this->encriptString($className),
-                'property' => $this->encriptString($property)
-            ));
-    }
-
-    public function generateMethodUrl($className, $method)
-    {
-        return $this->router->generate('zenstruck_ajax_entity_method', array(
-                'entity' => $this->encriptString($className),
-                'method' => $this->encriptString($method)
-            ));
     }
 
     public function encriptString($string)

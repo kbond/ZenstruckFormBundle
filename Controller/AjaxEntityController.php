@@ -4,6 +4,7 @@ namespace Zenstruck\Bundle\FormBundle\Controller;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Zenstruck\Bundle\FormBundle\Form\AjaxEntityManager;
 
 /**
@@ -18,28 +19,26 @@ class AjaxEntityController
         $this->manager = $manager;
     }
 
-    public function findByMethodAction($entity, $method, Request $request)
+    public function findAction(Request $request)
     {
-        $query = $request->query->get('q');
-
-        if (!$query) {
-            return new JsonResponse(array());
+        if (!$request->isXmlHttpRequest()) {
+            throw new NotFoundHttpException('Must be ajax request');
         }
 
-        $results = $this->manager->findEntitiesByMethod($entity, $method, $query);
+        $property = $request->request->get('property');
+        $method = $request->request->get('method');
+        $entity = $request->request->get('entity');
+        $query = $request->request->get('q');
 
-        return new JsonResponse($results);
-    }
+        $results = array();
 
-    public function findByPropertyAction($entity, $property, Request $request)
-    {
-        $query = $request->query->get('q');
-
-        if (!$query) {
-            return new JsonResponse(array());
+        if ($query) {
+            if ($property) {
+                $results = $this->manager->findEntitiesByProperty($entity, $property, $query);
+            } elseif ($method) {
+                $results = $this->manager->findEntitiesByMethod($entity, $method, $query);
+            }
         }
-
-        $results = $this->manager->findEntitiesByProperty($entity, $property, $query);
 
         return new JsonResponse($results);
     }

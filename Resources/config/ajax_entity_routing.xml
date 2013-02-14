@@ -4,11 +4,8 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-    <route id="zenstruck_ajax_entity_property" pattern="/_entity_property/{entity}/{property}">
-        <default key="_controller">zenstruck_form.ajax_entity_controller:findByPropertyAction</default>
-    </route>
-
-    <route id="zenstruck_ajax_entity_method" pattern="/_entity_method/{entity}/{method}">
-        <default key="_controller">zenstruck_form.ajax_entity_controller:findByMethodAction</default>
+    <route id="zenstruck_ajax_entity" pattern="/_entity_find">
+        <default key="_controller">zenstruck_form.ajax_entity_controller:findAction</default>
+        <requirement key="_method">POST</requirement>
     </route>
 </routes>

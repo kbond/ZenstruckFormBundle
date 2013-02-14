@@ -12,13 +12,13 @@
     <services>
         <service id="zenstruck_form.ajax_entity_manager" class="%zenstruck_form.ajax_entity_manager.class%">
             <argument type="service" id="doctrine" />
-            <argument type="service" id="router" />
             <argument>%kernel.secret%</argument>
             <argument />
         </service>
 
         <service id="zenstruck_form.ajax_entity_type" class="%zenstruck_form.ajax_entity_type.class%">
             <argument type="service" id="doctrine" />
+            <argument type="service" id="router" />
             <argument type="service" id="zenstruck_form.ajax_entity_manager" />
             <tag name="form.type" alias="zenstruck_ajax_entity" />
         </service>
