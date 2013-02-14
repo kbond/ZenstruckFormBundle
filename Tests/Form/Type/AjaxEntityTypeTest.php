@@ -3,6 +3,8 @@
 
 namespace Zenstruck\Bundle\FormBundle\Tests\Form\Type;
 
+use Symfony\Bundle\FrameworkBundle\Client;
+use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormView;
 use Zenstruck\Bundle\FormBundle\Tests\Functional\WebTestCase;
 use Zenstruck\Bundle\FormBundle\Form\Type\AjaxEntityType;
@@ -16,91 +18,120 @@ class AjaxEntityTypeTest extends WebTestCase
     public function testDefault()
     {
         $client = $this->prepareEnvironment();
-        $registry = $client->getContainer()->get('doctrine');
-        $manager = new AjaxEntityManager($registry, $client->getContainer()->get('router'), '1234', false);
-
-        /** @var $formView FormView */
-        $formView = $client->getContainer()->get('form.factory')->create(
-            new AjaxEntityType($registry, $manager),
-            null,
-            array(
-                'class' => 'FormTestBundle:Author'
-            )
-        )->createView();
+        $formView = $this->createFormView(
+            $client, array('class' => 'FormTestBundle:Author')
+        );
 
         $this->assertTrue($formView instanceof FormView);
         $this->assertFalse(isset($formView->vars['attr']['data-ajax-url']));
+        $this->assertFalse(isset($formView->vars['attr']['data-entity']));
+        $this->assertFalse(isset($formView->vars['attr']['data-property']));
+        $this->assertFalse(isset($formView->vars['attr']['data-method']));
     }
 
     public function testCustomUrl()
     {
         $client = $this->prepareEnvironment();
-        $registry = $client->getContainer()->get('doctrine');
-        $manager = new AjaxEntityManager($registry, $client->getContainer()->get('router'), '1234', false);
-
-        /** @var $formView FormView */
-        $formView = $client->getContainer()->get('form.factory')->create(
-            new AjaxEntityType($registry, $manager),
-            null,
-            array(
+        $formView = $this->createFormView(
+            $client, array(
                 'class' => 'FormTestBundle:Author',
                 'url' => '/foo/bar'
             )
-        )->createView();
+        );
 
         $this->assertTrue($formView instanceof FormView);
         $this->assertEquals('/foo/bar', $formView->vars['attr']['data-ajax-url']);
+        $this->assertFalse(isset($formView->vars['attr']['data-entity']));
+        $this->assertFalse(isset($formView->vars['attr']['data-property']));
+        $this->assertFalse(isset($formView->vars['attr']['data-method']));
     }
 
     public function testAutoUrl()
     {
         $client = $this->prepareEnvironment();
-        $registry = $client->getContainer()->get('doctrine');
-        $manager = new AjaxEntityManager($registry, $client->getContainer()->get('router'), '1234', true);
-
-        /** @var $formView FormView */
-        $formView = $client->getContainer()->get('form.factory')->create(
-            new AjaxEntityType($registry, $manager),
-            null,
+        $manager = $this->createManager($client);
+        $formView = $this->createFormView(
+            $client,
             array(
                 'class' => 'FormTestBundle:Author',
                 'property' => 'name',
                 'use_controller' => true,
                 'url' => '/foo/bar'
-            )
-        )->createView();
-        $url = '/_entity_property/'.$manager->encriptString('FormTestBundle:Author').'/'.$manager->encriptString('name');
+            ),
+            true
+        );
 
         $this->assertTrue($formView instanceof FormView);
-        $this->assertEquals($url, $formView->vars['attr']['data-ajax-url']);
+        $this->assertEquals('/_entity_find', $formView->vars['attr']['data-ajax-url']);
+        $this->assertTrue(isset($formView->vars['attr']['data-entity']));
+        $this->assertTrue(isset($formView->vars['attr']['data-property']));
+        $this->assertEquals('FormTestBundle:Author', $manager->decriptString($formView->vars['attr']['data-entity']));
+        $this->assertEquals('name', $manager->decriptString($formView->vars['attr']['data-property']));
 
-        $formView = $client->getContainer()->get('form.factory')->create(
-            new AjaxEntityType($registry, $manager),
-            null,
+        $formView = $this->createFormView(
+            $client,
             array(
                 'class' => 'FormTestBundle:Author',
                 'property' => 'name',
                 'method' => 'findActive',
                 'use_controller' => true,
                 'url' => '/foo/bar'
-            )
-        )->createView();
-        $url = '/_entity_method/'.$manager->encriptString('FormTestBundle:Author').'/'.$manager->encriptString('findActive');
+            ),
+            true
+        );
 
-        $this->assertEquals($url, $formView->vars['attr']['data-ajax-url']);
+        $this->assertTrue(isset($formView->vars['attr']['data-entity']));
+        $this->assertTrue(isset($formView->vars['attr']['data-method']));
+        $this->assertFalse(isset($formView->vars['attr']['data-property']));
+        $this->assertEquals('FormTestBundle:Author', $manager->decriptString($formView->vars['attr']['data-entity']));
+        $this->assertEquals('findActive', $manager->decriptString($formView->vars['attr']['data-method']));
 
         $this->setExpectedException('Symfony\Component\OptionsResolver\Exception\MissingOptionsException');
 
-        $manager = new AjaxEntityManager($registry, $client->getContainer()->get('router'), '1234', false);
-        $client->getContainer()->get('form.factory')->create(
-            new AjaxEntityType($registry, $manager),
-            null,
+        $this->createFormView(
+            $client,
             array(
                 'class' => 'FormTestBundle:Author',
                 'property' => 'name',
                 'use_controller' => true,
                 'url' => '/foo/bar'
-            )
-        )->createView();
+            ),
+            false
+        );
+    }
+
+    /**
+     * @param \Symfony\Bundle\FrameworkBundle\Client $client
+     * @param array $formOptions
+     * @param bool $controllerEnabled
+     *
+     * @return \Symfony\Component\Form\FormView
+     */
+    protected function createFormView(Client $client, array $formOptions, $controllerEnabled = false)
+    {
+        $registry = $client->getContainer()->get('doctrine');
+        $router = $client->getContainer()->get('router');
+        $manager = new AjaxEntityManager($registry, '1234', $controllerEnabled);
+
+        /** @var $form Form */
+        $form = $client->getContainer()->get('form.factory')->create(
+            new AjaxEntityType($registry, $router, $manager),
+            null,
+            $formOptions
+        );
+
+        return $form->createView();
+    }
+
+    /**
+     * @param \Symfony\Bundle\FrameworkBundle\Client $client
+     * @param bool $controllerEnabled
+     *
+     * @return \Zenstruck\Bundle\FormBundle\Form\AjaxEntityManager
+     */
+    protected function createManager(Client $client, $controllerEnabled = true)
+    {
+        $registry = $client->getContainer()->get('doctrine');
+        return new AjaxEntityManager($registry, '1234', $controllerEnabled);
     }
 }
