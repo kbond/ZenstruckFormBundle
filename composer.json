@@ -13,7 +13,8 @@
     ],
     "require": {
         "ext-mcrypt": "*",
-        "symfony/symfony" : "~2.1"
+        "symfony/symfony": "~2.1",
+        "zendframework/zend-crypt": "~2.0"
     },
     "require-dev": {
         "doctrine/doctrine-bundle": "*",

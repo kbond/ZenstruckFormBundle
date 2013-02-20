@@ -3,6 +3,7 @@
 namespace Zenstruck\Bundle\FormBundle\Form;
 
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Zend\Crypt\BlockCipher;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
@@ -62,19 +63,24 @@ class AjaxEntityManager
         return $dqlQuery->getResult();
     }
 
-    /**
-     * Encrypt code src: http://blog.justin.kelly.org.au/simple-mcrypt-encrypt-decrypt-functions-for-p/
-     */
     public function encriptString($string)
     {
-        return trim(base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, $this->secret, $string, MCRYPT_MODE_ECB, mcrypt_create_iv(mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB), MCRYPT_RAND))));
+        return $this->getBlockCipher()->encrypt($string);
+    }
+
+    public function decriptString($string)
+    {
+        return $this->getBlockCipher()->decrypt($string);
     }
 
     /**
-     * Decrypt code src: http://blog.justin.kelly.org.au/simple-mcrypt-encrypt-decrypt-functions-for-p/
+     * @return \Zend\Crypt\BlockCipher
      */
-    public function decriptString($string)
+    protected function getBlockCipher()
     {
-        return trim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, $this->secret, base64_decode($string), MCRYPT_MODE_ECB, mcrypt_create_iv(mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB), MCRYPT_RAND)));
+        $blockCipher = BlockCipher::factory('mcrypt', array('algo' => 'aes'));
+        $blockCipher->setKey($this->secret);
+
+        return $blockCipher;
     }
 }
