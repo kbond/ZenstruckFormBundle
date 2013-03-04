@@ -23,5 +23,6 @@
     "autoload": {
         "psr-0": { "Zenstruck\\Bundle\\FormBundle": "" }
     },
+    "minimum-stability": "alpha",
     "target-dir": "Zenstruck/Bundle/FormBundle"
 }
