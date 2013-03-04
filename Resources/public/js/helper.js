@@ -51,7 +51,7 @@ var ZenstruckFormHelper = {
             prototype = prototype.replace(/__name__/g, count);
 
             // create dom element
-            var $newWidget = $(prototype);
+            var $newWidget = $(prototype.trim());
 
             $container.children('.form-collection').removeClass('hide').append($newWidget);
         });
