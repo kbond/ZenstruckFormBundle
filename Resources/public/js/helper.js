@@ -54,6 +54,10 @@ var ZenstruckFormHelper = {
             var $newWidget = $(prototype.trim());
 
             $container.children('.form-collection').removeClass('hide').append($newWidget);
+
+            $newWidget.find('.zenstruck-ajax-entity').each(function() {
+                ZenstruckFormHelper._select2($(this));
+            });
         });
     },
 
@@ -61,60 +65,64 @@ var ZenstruckFormHelper = {
      * Initializes the AjaxEntity Select2 widget
      */
     initSelect2Helper: function() {
+
+        $('.zenstruck-ajax-entity').each(function() {
+            ZenstruckFormHelper._select2($(this));
+        });
+    },
+
+    _select2: function($element) {
         if(!jQuery().select2) {
             return;
         }
 
-        $('.zenstruck-ajax-entity').each(function() {
-            var $this = $(this);
-            var required = $this.attr('required');
-            var multiple = $this.hasClass('multiple');
-            var method = $this.data('method');
-            var property = $this.data('property');
-            var entity = $this.data('entity');
+        var required = $element.attr('required');
+        var multiple = $element.hasClass('multiple');
+        var method = $element.data('method');
+        var property = $element.data('property');
+        var entity = $element.data('entity');
 
-            var options = {
-                minimumInputLength: 1,
-                allowClear: !required,
-                multiple: multiple,
-                placeholder: function(element) {
-                    return $(element).data('placeholder');
-                },
-                initSelection : function (element, callback) {
-                    var initialData = $(element).data('initial');
+        var options = {
+            minimumInputLength: 1,
+            allowClear: !required,
+            multiple: multiple,
+            placeholder: function(element) {
+                return $(element).data('placeholder');
+            },
+            initSelection : function (element, callback) {
+                var initialData = $(element).data('initial');
 
-                    if (initialData) {
-                        callback(initialData);
-                    }
-                },
-                ajax: {
-                    dataType: 'json',
-                    type: 'post',
-                    data: function (term) {
-                        return {
-                            q: term,
-                            entity: entity,
-                            property: property,
-                            method: method
-                        }
-                    },
-                    results: function (data) {
-                        return { results: data }
-                    }
+                if (initialData) {
+                    callback(initialData);
                 }
-            };
-
-            $(this).select2(options);
-
-            if (multiple) {
-                $(this).on('change', function(e) {
-                    if (e.removed) {
-                        var re = new RegExp(e.removed.id, 'g');
-                        $this.val($this.val().replace(re, ''));
+            },
+            ajax: {
+                dataType: 'json',
+                type: 'post',
+                data: function (term) {
+                    return {
+                        q: term,
+                        entity: entity,
+                        property: property,
+                        method: method
                     }
-                });
+                },
+                results: function (data) {
+                    return { results: data }
+                }
             }
-        });
+        };
+
+        $element.select2(options);
+
+        if (multiple) {
+            $element.on('change', function(e) {
+                if (e.removed) {
+                    var re = new RegExp(e.removed.id, 'g');
+                    $element.val($element.val().replace(re, ''));
+                }
+            });
+        }
     },
 
     initTunnelHelper: function() {
