@@ -307,8 +307,12 @@ $(function() {
 
 ### PostLinkHelper
 
-Allows a standard `<a>` tag to become a method="POST" link.  Add the class `method-post` or `method-delete` to an `<a>`
-tag for it's href value to become a POST link. Use the `method-delete` class to generate a confirmation dialog.
+Allows a standard `<a>` tag to become a method="POST" link.  Add the class `method-post`, `method-post-confirm`
+or `method-delete` to an `<a>` tag for it's href value to become a POST link.
+
+- `method-post`: standard post link (no confirmation)
+- `method-post-confirm`: `method-post` with a confirmation dialog that is customizable via the `data-message` attribute
+- `method-delete`: `method-post` with a "Are you sure you want to delete?" confirmation dialog
 
 Enable with `ZenstruckFormHelper.initPostLinkHelper()`
 

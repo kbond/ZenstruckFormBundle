@@ -11,12 +11,20 @@ var ZenstruckFormHelper = {
      * Use the "method-delete" class to generate a confirmation dialog
      */
     initPostLinkHelper: function() {
-        $('a.method-post,a.method-delete').on('click', function(e) {
+        $('a.method-post,a.method-delete,a.method-post-confirm').on('click', function(e) {
             e.preventDefault();
 
             //check if delete method - show confirmation if is
             if ($(this).hasClass('method-delete')) {
                 if (!confirm("Are you sure you want to delete?")) {
+                    return;
+                }
+            }
+
+            if ($(this).hasClass('method-post-confirm')) {
+                var message = $(this).data('message');
+
+                if (!confirm(message ? message : 'Are you sure?')) {
                     return;
                 }
             }
