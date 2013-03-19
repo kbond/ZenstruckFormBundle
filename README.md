@@ -312,7 +312,7 @@ or `method-delete` to an `<a>` tag for it's href value to become a POST link.
 
 - `method-post`: standard post link (no confirmation)
 - `method-post-confirm`: `method-post` with a confirmation dialog that is customizable via the `data-message` attribute
-- `method-delete`: `method-post` with a "Are you sure you want to delete?" confirmation dialog
+- `method-delete`: cross browser compatible DELETE link with a "Are you sure you want to delete?" confirmation dialog
 
 Enable with `ZenstruckFormHelper.initPostLinkHelper()`
 

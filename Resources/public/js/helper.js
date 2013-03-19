@@ -12,10 +12,13 @@ var ZenstruckFormHelper = {
      */
     initPostLinkHelper: function() {
         $('a.method-post,a.method-delete,a.method-post-confirm').on('click', function(e) {
+            var isDelete = $(this).hasClass('method-delete');
+
             e.preventDefault();
 
+
             //check if delete method - show confirmation if is
-            if ($(this).hasClass('method-delete')) {
+            if (isDelete) {
                 if (!confirm("Are you sure you want to delete?")) {
                     return;
                 }
@@ -29,8 +32,15 @@ var ZenstruckFormHelper = {
                 }
             }
 
-            // create delete form and submit
+            // create form
             var $form = $('<form></form>').attr('method', 'POST').attr('action', $(this).attr('href'));
+
+            // use delete method if delete link
+            if (isDelete) {
+                $form.append('<input type="hidden" name="_method" value="DELETE" />');
+            }
+
+            // append and submit
             $form.appendTo($('body'));
             $form.submit();
         });
