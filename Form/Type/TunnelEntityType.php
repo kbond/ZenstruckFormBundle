@@ -26,7 +26,7 @@ class TunnelEntityType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $transformer = new AjaxEntityTransformer($this->registry, $options['class'], false);
-        $builder->addModelTransformer($transformer);
+        $builder->addViewTransformer($transformer);
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options)

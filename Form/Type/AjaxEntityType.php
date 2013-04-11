@@ -34,7 +34,7 @@ class AjaxEntityType extends AbstractType
     {
         $transformer = new AjaxEntityTransformer($this->registry, $options['class'], $options['multiple']);
 
-        $builder->addModelTransformer($transformer);
+        $builder->addViewTransformer($transformer);
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options)
