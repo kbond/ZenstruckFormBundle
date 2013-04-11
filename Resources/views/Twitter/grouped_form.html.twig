@@ -1,0 +1,21 @@
+{% if not form.valid %}
+    <div class="alert alert-error">This form has errors.</div>
+{% endif %}
+
+<ul class="nav nav-tabs">
+    {% for name in form.groupNames %}
+        <li{{ loop.first ? ' class="active"' : null }}>
+            <a class="{{ not form.valid(name) ? 'text-error' : null }}" href="#{{ name|replace(' ', '-')|lower }}" data-toggle="tab">{{ name }}</a>
+        </li>
+    {% endfor %}
+</ul>
+
+<div class="tab-content">
+    {% for name, group in form.groups %}
+        <div class="tab-pane{{ loop.first ? ' active' : null }}" id="{{ name|replace(' ', '-')|lower }}">
+            {% for field in group %}
+                {{ form_row(field) }}
+            {% endfor %}
+        </div>
+    {% endfor %}
+</div>

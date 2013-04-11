@@ -288,6 +288,74 @@ Allow you to add help messages to your form fields.
     }
     ```
 
+### Group Type
+
+![Group Type screenshot](https://lh6.googleusercontent.com/-LpFkVgg71nc/UWbRMFGn8cI/AAAAAAAAKFc/XBtlO4b4Uok/s433/form-group.jpg)
+
+This type allows you group large forms into tabs.
+
+1. Enable in your `config.yml` (disabled by default):
+
+    ```yaml
+    zenstruck_form:
+        form_types:
+            group: true
+    ```
+
+2. Add help option to your form fields
+
+    ```php
+    use Symfony\Component\Form\AbstractType;
+    use Symfony\Component\Form\FormBuilderInterface;
+
+    class MyFormType extends AbstractType
+    {
+        public function buildForm(FormBuilderInterface $builder, array $options)
+        {
+            $builder
+                ->add('name', 'text', array(
+                    'group' => 'Foo'
+                ))
+                ->add('name', 'text', array(
+                    'group' => 'Bar'
+                ))
+            ;
+        }
+
+        // ...
+    }
+    ```
+
+    *Note:* fields without a group will be in the first, default tab.
+
+3. When creating your form view in your controller, wrap it with `Zenstruck\Bundle\FormBundle\Form\GroupedFormView`
+
+    ```php
+    class MyController extends Controller
+    {
+        public function newAction(Request $request)
+        {
+            // ...
+            return array(
+                'grouped_form' => new \Zenstruck\Bundle\FormBundle\Form\GroupedFormView($form->createView())
+            );
+        }
+    }
+    ```
+
+    *Note:* to name your default tab to something other that *Default*, pass it as the second parameter
+     to `GroupedFormView`
+
+4. In your template, include `grouped_form.html.twig` to render the form.
+
+    ```html+jinja
+    <form method="post" {{ form_enctype(grouped_form.form) }}>
+        {% include 'ZenstruckFormBundle:Twitter:grouped_form.html.twig' with { 'form': grouped_form } %}
+    </form>
+    ```
+
+    *Note:* to use the wrapped form, use `grouped_form.form`
+
 ## Miscellaneous Javascript helpers
 
 This bundle comes with a set of useful javascript helpers.  To enable, add the following javascipt file (or add to your
@@ -330,6 +398,7 @@ Enable with `ZenstruckFormHelper.initPostLinkHelper()`
 zenstruck_form:
     form_types:
         help:                   false
+        group:                  false
         tunnel_entity:          false
         ajax_entity:            false
         ajax_entity_controller: false

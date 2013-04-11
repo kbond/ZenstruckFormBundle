@@ -24,6 +24,10 @@ class ZenstruckFormExtension extends Extension
             $loader->load('help_type.xml');
         }
 
+        if ($config['form_types']['group']) {
+            $loader->load('group_type.xml');
+        }
+
         if ($config['form_types']['ajax_entity']) {
             $loader->load('ajax_entity_type.xml');
             $container->getDefinition('zenstruck_form.ajax_entity_manager')
