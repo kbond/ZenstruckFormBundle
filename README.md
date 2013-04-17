@@ -8,15 +8,18 @@ Provides Twitter Bootstrap form theme, useful FormType Extensions and javascript
 
 1. Add to your `composer.json`:
 
-    ```json
-    {
-        "require": {
-            "zenstruck/form-bundle": "*"
-        }
-    }
+    ```
+    composer require zenstruck/form-bundle
     ```
 
-2. Register the bundle with Symfony2:
+2. *Optional* If using the Grouped form feature, add
+[zenstruck/slugify-bundle](https://github.com/kbond/ZenstruckSlugifyBundle) to your `composer.json`
+
+    ```
+    composer require zenstruck/slugify-bundle
+    ```
+
+3. Register the bundle with Symfony2:
 
     ```php
     // app/AppKernel.php
