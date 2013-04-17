@@ -14,6 +14,7 @@
     "require": {
         "ext-mcrypt": "*",
         "symfony/symfony": "~2.1",
+        "zenstruck/slugify-bundle": "~1.0",
         "zendframework/zend-crypt": "~2.0,!=2.1.1"
     },
     "require-dev": {

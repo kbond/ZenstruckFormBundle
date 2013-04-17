@@ -26,6 +26,9 @@ Provides Twitter Bootstrap form theme, useful FormType Extensions and javascript
         $bundles = array(
             // ...
             new Zenstruck\Bundle\FormBundle\ZenstruckFormBundle(),
+
+            // enable if you want to use the grouped form
+            // new Zenstruck\SlugifyBundle\ZenstruckSlugifyBundle()
         );
         // ...
     }
