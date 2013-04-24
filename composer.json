@@ -17,7 +17,8 @@
     "require-dev": {
         "doctrine/doctrine-bundle": "*",
         "doctrine/orm": "*",
-        "zenstruck/slugify-bundle": "~1.0"
+        "zenstruck/slugify-bundle": "~1.0",
+        "zendframework/zend-crypt": "~2.0,!=2.1.1"
     },
     "suggest": {
         "zenstruck/slugify-bundle": "Required for the grouped form feature",
