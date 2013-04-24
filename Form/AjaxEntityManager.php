@@ -12,18 +12,11 @@ class AjaxEntityManager
 {
     protected $registry;
     protected $secret;
-    protected $controllerEnabled;
 
-    public function __construct(ManagerRegistry $registry, $secret, $controllerEnabled = false)
+    public function __construct(ManagerRegistry $registry, $secret)
     {
         $this->registry = $registry;
         $this->secret = $secret;
-        $this->controllerEnabled = $controllerEnabled;
-    }
-
-    public function isControllerEnabled()
-    {
-        return $this->controllerEnabled;
     }
 
     public function findEntitiesByMethod($entity, $method, $query)

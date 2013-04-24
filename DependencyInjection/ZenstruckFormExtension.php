@@ -33,11 +33,13 @@ class ZenstruckFormExtension extends Extension
 
         if ($config['form_types']['ajax_entity']) {
             $loader->load('ajax_entity_type.xml');
-            $container->getDefinition('zenstruck_form.ajax_entity_manager')
-                ->replaceArgument(2, $config['form_types']['ajax_entity_controller']);
         }
 
         if ($config['form_types']['ajax_entity_controller']) {
+            if (!class_exists('\Zend\Crypt\BlockCipher')) {
+                throw new \Exception('zendframework/zend-crypt must be installed to use the ajax_entity_controller feature.');
+            }
+
             $loader->load('ajax_entity_controller.xml');
         }
 

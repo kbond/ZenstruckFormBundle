@@ -12,9 +12,7 @@
         }
     ],
     "require": {
-        "ext-mcrypt": "*",
-        "symfony/symfony": "~2.1",
-        "zendframework/zend-crypt": "~2.0,!=2.1.1"
+        "symfony/symfony": "~2.1"
     },
     "require-dev": {
         "doctrine/doctrine-bundle": "*",
@@ -22,7 +20,8 @@
         "zenstruck/slugify-bundle": "~1.0"
     },
     "suggest": {
-        "zenstruck/slugify-bundle": "Required for the grouped form feature"
+        "zenstruck/slugify-bundle": "Required for the grouped form feature",
+        "zendframework/zend-crypt": "Required when using the ajax entity type 'use_controller' option. Version: ~2.0,!=2.1.1"
     },
     "autoload": {
         "psr-0": { "Zenstruck\\Bundle\\FormBundle": "" }

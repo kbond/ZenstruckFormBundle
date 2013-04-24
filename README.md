@@ -12,14 +12,22 @@ Provides Twitter Bootstrap form theme, useful FormType Extensions and javascript
     composer require zenstruck/form-bundle
     ```
 
-2. *Optional* If using the Grouped form feature, add
+2. *Optional* If using the `ajax_entity_controller` feature, add `zendframework/zend-crypt` to your `composer.json`:
+
+    ```
+    composer require zendframework/zend-crypt:~2.0,!=2.1.1
+    ```
+
+    **Note:** Version 2.1.1 of `zend-crypt` does not have it's autoloader configured correctly.
+
+3. *Optional* If using the Grouped form feature, add
 [zenstruck/slugify-bundle](https://github.com/kbond/ZenstruckSlugifyBundle) to your `composer.json`
 
     ```
     composer require zenstruck/slugify-bundle
     ```
 
-3. Register the bundle with Symfony2:
+4. Register the bundle with Symfony2:
 
     ```php
     // app/AppKernel.php
@@ -96,7 +104,7 @@ There are several ways to use this type:
     }
     ```
 
-2. Select2 with built in entity finder:
+2. Select2 with built in entity finder (`zendframework/zend-crypt` required):
 
     Enable the controller in your `config.yml` (disabled by default):
 
@@ -137,7 +145,7 @@ There are several ways to use this type:
     }
     ```
 
-    *Note*: The URL is dynamically generated for each entity but is encrypted with the application's `secret` for
+    **Note:** The URL is dynamically generated for each entity but is encrypted with the application's `secret` for
      security purposes.
 
 3. Select2 with custom URL.  This will create a Select2 widget for this field.
@@ -332,7 +340,7 @@ This type allows you group large forms into tabs.
     }
     ```
 
-    *Note:* fields without a group will be in the first, default tab.
+    **Note:** fields without a group will be in the first, default tab.
 
 3. When creating your form view in your controller, wrap it with `Zenstruck\Bundle\FormBundle\Form\GroupedFormView`
 
@@ -349,7 +357,7 @@ This type allows you group large forms into tabs.
     }
     ```
 
-    *Note:* to name your default tab to something other that *Default*, pass it as the second parameter
+    **Note:** to name your default tab to something other than *Default*, pass it as the second parameter
      to `GroupedFormView`
 
 4. In your template, include `grouped_form.html.twig` to render the form.
@@ -360,7 +368,7 @@ This type allows you group large forms into tabs.
     </form>
     ```
 
-    *Note:* to use the wrapped form, use `grouped_form.form`
+    **Note:** to use the wrapped form, use `grouped_form.form`
 
 ## Miscellaneous Javascript helpers
 

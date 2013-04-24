@@ -23,7 +23,7 @@ class AjaxEntityType extends AbstractType
     protected $router;
     protected $manager;
 
-    public function __construct(ManagerRegistry $registry, Router $router, AjaxEntityManager $manager)
+    public function __construct(ManagerRegistry $registry, Router $router, AjaxEntityManager $manager = null)
     {
         $this->registry = $registry;
         $this->router = $router;
@@ -69,7 +69,7 @@ class AjaxEntityType extends AbstractType
             $view->vars['attr']['class'] = $class . ($multiple ? ' multiple' : '');
 
             if ($useController) {
-                if (!$this->manager->isControllerEnabled()) {
+                if (null === $this->manager) {
                     throw new MissingOptionsException('Config "zenstruck_form.form_types.ajax_entity_controller" option must be enabled when "use_controller" is true.');
                 }
 
