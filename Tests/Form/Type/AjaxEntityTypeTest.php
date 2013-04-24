@@ -107,11 +107,16 @@ class AjaxEntityTypeTest extends WebTestCase
      *
      * @return \Symfony\Component\Form\FormView
      */
-    protected function createFormView(Client $client, array $formOptions, $controllerEnabled = false)
+    protected function createFormView(Client $client, array $formOptions, $useManager = true)
     {
         $registry = $client->getContainer()->get('doctrine');
         $router = $client->getContainer()->get('router');
-        $manager = new AjaxEntityManager($registry, '1234', $controllerEnabled);
+
+        if ($useManager) {
+            $manager = new AjaxEntityManager($registry, '1234');
+        } else {
+            $manager = null;
+        }
 
         /** @var $form Form */
         $form = $client->getContainer()->get('form.factory')->create(
