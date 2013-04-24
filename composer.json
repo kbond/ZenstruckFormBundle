@@ -27,5 +27,10 @@
     "autoload": {
         "psr-0": { "Zenstruck\\Bundle\\FormBundle": "" }
     },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.x-dev"
+        }
+    },
     "target-dir": "Zenstruck/Bundle/FormBundle"
 }
