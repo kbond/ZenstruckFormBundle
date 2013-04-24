@@ -358,13 +358,13 @@ This type allows you group large forms into tabs.
     ```
 
     **Note:** to name your default tab to something other than *Default*, pass it as the second parameter
-     to `GroupedFormView`
+     to the `GroupedFormView` constructor.
 
 4. In your template, include `grouped_form.html.twig` to render the form.
 
     ```html+jinja
     <form method="post" {{ form_enctype(grouped_form.form) }}>
-        {% include 'ZenstruckFormBundle:Twitter:grouped_form.html.twig' with { 'form': grouped_form } %}
+        {% include 'ZenstruckFormBundle:Twitter:grouped_form.html.twig' with { 'grouped_form': grouped_form } %}
     </form>
     ```
 
