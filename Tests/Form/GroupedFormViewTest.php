@@ -14,6 +14,32 @@ use Zenstruck\Bundle\FormBundle\Tests\Functional\WebTestCase;
  */
 class GroupedFormViewTest extends WebTestCase
 {
+    public function testOrder()
+    {
+        $client = $this->prepareEnvironment();
+        $formBuilder = $client->getContainer()->get('form.factory')->createBuilder();
+
+        $form = $formBuilder
+            ->add('name', 'text', array('group' => 'first'))
+            ->add('address', 'text', array('group' => 'second'))
+            ->add('notes', 'text')
+            ->add('posts', 'text', array('group' => 'third'))
+            ->getForm()
+        ;
+
+        $groupedForm = new GroupedFormView($form->createView());
+        $this->assertEquals(array('Default', 'first', 'second', 'third'), $groupedForm->getGroupNames());
+
+        $groupedForm = new GroupedFormView($form->createView(), 'Default', array('third'));
+        $this->assertEquals(array('third', 'first', 'second', 'Default'), $groupedForm->getGroupNames());
+
+        $groupedForm = new GroupedFormView($form->createView(), 'Default', array('third', 'second'));
+        $this->assertEquals(array('third', 'second', 'first', 'Default'), $groupedForm->getGroupNames());
+
+        $groupedForm = new GroupedFormView($form->createView(), 'Default', array('foo', 'third', 'second', 'bar'));
+        $this->assertEquals(array('third', 'second', 'first', 'Default'), $groupedForm->getGroupNames());
+    }
+
     public function testValid()
     {
         $collectionConstraint = new Collection(array(

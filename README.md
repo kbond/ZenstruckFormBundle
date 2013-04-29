@@ -385,6 +385,14 @@ In your template:
 {{ grouped_form.data('foo') }} {# returns bar #}
 ```
 
+#### Custom group order
+
+```php
+$groupedForm = new GroupedFormView($form->createView(), 'Default', array(
+    'Bar', 'Foo', 'Default'
+));
+```
+
 ## Miscellaneous Javascript helpers
 
 This bundle comes with a set of useful javascript helpers.  To enable, add the following javascipt file (or add to your

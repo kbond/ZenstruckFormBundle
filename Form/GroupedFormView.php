@@ -17,8 +17,9 @@ class GroupedFormView
     /**
      * @param Form|FormView $form
      * @param string $defaultGroup
+     * @param array $order
      */
-    public function __construct($form, $defaultGroup = 'Default')
+    public function __construct($form, $defaultGroup = 'Default', $order = array())
     {
         if ($form instanceof Form) {
             $form = $form->createView();
@@ -26,12 +27,25 @@ class GroupedFormView
 
         $this->form = $form;
 
-        foreach ($this->form->children as $field) {
-            $this->groups[$field->vars['group'] ?: $defaultGroup][] = $field;
+        // use custom order
+        foreach ($order as $item) {
+            $this->groups[$item] = array();
         }
 
-        uksort($this->groups, function($a, $b) use ($defaultGroup) {
-                return $a !== $defaultGroup;
+        // if no order is set, make default first group
+        if (empty($this->groups)) {
+            $this->groups[$defaultGroup] = array();
+        }
+
+        // add fields to groups
+        foreach ($this->form->children as $field) {
+            $group = $field->vars['group'] ?: $defaultGroup;
+            $this->groups[$group][] = $field;
+        }
+
+        // filter empty groups
+        $this->groups = array_filter($this->groups, function($fields) {
+                return count($fields);
             });
     }
 
