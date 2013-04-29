@@ -2,6 +2,7 @@
 
 namespace Zenstruck\Bundle\FormBundle\Form;
 
+use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormView;
 
 /**
@@ -13,8 +14,16 @@ class GroupedFormView
     protected $data = array();
     protected $form;
 
-    public function __construct(FormView $form, $defaultGroup = 'Default')
+    /**
+     * @param Form|FormView $form
+     * @param string $defaultGroup
+     */
+    public function __construct($form, $defaultGroup = 'Default')
     {
+        if ($form instanceof Form) {
+            $form = $form->createView();
+        }
+
         $this->form = $form;
 
         foreach ($this->form->children as $field) {
@@ -56,11 +65,6 @@ class GroupedFormView
     public function getGroups()
     {
         return $this->groups;
-    }
-
-    public function isGroupedForm()
-    {
-        return true;
     }
 
     public function setData($name, $value)

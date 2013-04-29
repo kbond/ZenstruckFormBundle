@@ -15,6 +15,7 @@ class TestKernel extends Kernel
             new \Symfony\Bundle\TwigBundle\TwigBundle(),
             new \Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new \Zenstruck\Bundle\FormBundle\ZenstruckFormBundle(),
+            new \Zenstruck\SlugifyBundle\ZenstruckSlugifyBundle(),
             new \Zenstruck\Bundle\FormBundle\Tests\Fixtures\App\FormTestBundle\FormTestBundle()
         );
 

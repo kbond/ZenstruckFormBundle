@@ -11,6 +11,10 @@ framework:
         enabled: true
         enable_annotations: true
 
+zenstruck_form:
+    form_types:
+        group: true
+
 twig:
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
