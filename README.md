@@ -370,6 +370,21 @@ This type allows you group large forms into tabs.
 
     **Note:** to use the wrapped form, use `grouped_form.form`
 
+#### Add custom data to `GroupedFormView`
+
+```php
+// ..
+$groupedForm = new \Zenstruck\Bundle\FormBundle\Form\GroupedFormView($form->createView());
+$groupedForm->setData('foo', 'bar');
+```
+
+In your template:
+
+```html+jinja
+{# ... #}
+{{ grouped_form.data('foo') }} {# returns bar #}
+```
+
 ## Miscellaneous Javascript helpers
 
 This bundle comes with a set of useful javascript helpers.  To enable, add the following javascipt file (or add to your

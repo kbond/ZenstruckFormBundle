@@ -10,6 +10,7 @@ use Symfony\Component\Form\FormView;
 class GroupedFormView
 {
     protected $groups = array();
+    protected $data = array();
     protected $form;
 
     public function __construct(FormView $form, $defaultGroup = 'Default')
@@ -60,5 +61,24 @@ class GroupedFormView
     public function isGroupedForm()
     {
         return true;
+    }
+
+    public function setData($name, $value)
+    {
+        $this->data[$name] = $value;
+    }
+
+    public function getData($name, $default = null)
+    {
+        if (!$this->hasData($name)) {
+            return $default;
+        }
+
+        return $this->data[$name];
+    }
+
+    public function hasData($name)
+    {
+        return array_key_exists($name, $this->data);
     }
 }
