@@ -71,7 +71,8 @@ To use, do one of the following:
 ![AjaxEntityType screenshot](https://lh3.googleusercontent.com/-qH5_q34yrjc/URvBEa_eydI/AAAAAAAAKEY/Yywbz7A2OqA/s384/ajax-entity.jpg)
 
 Creates a `1-m` or `m-m` entity association field.  This type simply creates a hidden field that takes
-an either 1 or multiple comma separated entity ids.
+an either 1 or multiple comma separated entity ids. **NOTE:** Ensure the entity your entity has its
+`__toString()` defined.
 
 Enable in your `config.yml` (disabled by default):
 
@@ -95,7 +96,7 @@ There are several ways to use this type:
         {
             $builder
                 ->add('name', 'zenstruck_ajax_entity', array(
-                    'class' => 'AppBundle:MyEntity'
+                    'class' => 'AppBundle:MyEntity' // ensure MyEntity::__toString() is defined
                 ))
             ;
         }
@@ -133,7 +134,7 @@ There are several ways to use this type:
         {
             $builder
                 ->add('name', 'zenstruck_ajax_entity', array(
-                    'class'             => 'AppBundle:MyEntity'
+                    'class'             => 'AppBundle:MyEntity', // ensure MyEntity::__toString() is defined
                     'use_controller'    => true,
                     'property'          => 'name`, // the entity property to search by
                     // 'method'         => 'findActive' // for using a custom repository method
@@ -160,7 +161,7 @@ There are several ways to use this type:
         {
             $builder
                 ->add('name', 'zenstruck_ajax_entity', array(
-                    'class' => 'AppBundle:MyEntity',
+                    'class' => 'AppBundle:MyEntity', // ensure MyEntity::__toString() is defined
                     'url' => '/myentity/find'
                 ))
             ;
