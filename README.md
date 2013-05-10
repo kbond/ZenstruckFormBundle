@@ -71,8 +71,7 @@ To use, do one of the following:
 ![AjaxEntityType screenshot](https://lh3.googleusercontent.com/-qH5_q34yrjc/URvBEa_eydI/AAAAAAAAKEY/Yywbz7A2OqA/s384/ajax-entity.jpg)
 
 Creates a `1-m` or `m-m` entity association field.  This type simply creates a hidden field that takes
-an either 1 or multiple comma separated entity ids. **NOTE:** Ensure the entity your entity has its
-`__toString()` defined.
+an either 1 or multiple comma separated entity ids. **Note:** Ensure the entity has `__toString()` defined.
 
 Enable in your `config.yml` (disabled by default):
 
