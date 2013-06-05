@@ -136,7 +136,7 @@ There are several ways to use this type:
                     'class'             => 'AppBundle:MyEntity', // ensure MyEntity::__toString() is defined
                     'use_controller'    => true,
                     'property'          => 'name`, // the entity property to search by
-                    // 'method'         => 'findActive' // for using a custom repository method
+                    // 'repo_method'    => 'findActive' // for using a custom repository method
                 ))
             ;
         }

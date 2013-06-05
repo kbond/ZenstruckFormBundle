@@ -51,7 +51,7 @@ class GroupedFormViewTest extends WebTestCase
 
         $client = $this->prepareEnvironment();
         $formBuilder = $client->getContainer()->get('form.factory')->createBuilder('form', null, array(
-                'validation_constraint' => $collectionConstraint
+                'constraints' => $collectionConstraint
             )
         );
 

@@ -73,12 +73,12 @@ class AjaxEntityType extends AbstractType
                     throw new MissingOptionsException('Config "zenstruck_form.form_types.ajax_entity_controller" option must be enabled when "use_controller" is true.');
                 }
 
-                if (!$options['property'] && !$options['method']) {
+                if (!$options['property'] && !$options['repo_method']) {
                     throw new MissingOptionsException('Either a property or method option must be set.');
                 }
 
-                if ($options['method']) {
-                    $view->vars['attr']['data-method'] = $this->manager->encriptString($options['method']);
+                if ($options['repo_method']) {
+                    $view->vars['attr']['data-method'] = $this->manager->encriptString($options['repo_method']);
                 } else {
                     $view->vars['attr']['data-property'] = $this->manager->encriptString($options['property']);
                 }
@@ -100,7 +100,7 @@ class AjaxEntityType extends AbstractType
                 'placeholder'   => 'Choose an option',
                 'use_controller'=> false,
                 'url'           => null,
-                'method'        => null,
+                'repo_method'        => null,
                 'property'      => null,
                 'multiple'      => false
             ));

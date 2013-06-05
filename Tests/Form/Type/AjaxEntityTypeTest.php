@@ -73,7 +73,7 @@ class AjaxEntityTypeTest extends WebTestCase
             array(
                 'class' => 'FormTestBundle:Author',
                 'property' => 'name',
-                'method' => 'findActive',
+                'repo_method' => 'findActive',
                 'use_controller' => true,
                 'url' => '/foo/bar'
             ),
