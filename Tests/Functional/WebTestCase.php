@@ -24,7 +24,7 @@ class WebTestCase extends BaseWebTestCase
         $this->runConsole($application, "doctrine:database:create");
         $this->runConsole($application, "doctrine:schema:create");
 
-        $this->em = $client->getContainer()->get('doctrine')->getEntityManager();
+        $this->em = $client->getContainer()->get('doctrine.orm.default_entity_manager');
         $this->addTestData();
 
         return $client;
