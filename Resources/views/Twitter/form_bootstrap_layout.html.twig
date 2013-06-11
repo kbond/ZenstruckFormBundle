@@ -85,7 +85,9 @@
             </div>
             {{ form_rest(form) }}
         </div>
-        <a href="#" class="btn btn-info form-collection-add">Add</a>
+        {% if allow_add %}
+            <a href="#" class="btn btn-info form-collection-add">Add</a>
+        {% endif %}
     {% endspaceless %}
 {% endblock collection_widget %}
 
