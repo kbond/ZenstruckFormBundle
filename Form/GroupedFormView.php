@@ -99,4 +99,9 @@ class GroupedFormView
     {
         return array_key_exists($name, $this->data);
     }
+
+    public function getVars()
+    {
+        return $this->form->vars;
+    }
 }
