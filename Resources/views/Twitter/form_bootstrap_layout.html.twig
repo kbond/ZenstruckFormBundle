@@ -15,18 +15,6 @@
     {% endspaceless %}
 {% endblock form_row %}
 
-{% block field_errors %}
-    {% spaceless %}
-        {% if errors|length > 0 %}
-            <span class="help-inline">
-                {% for error in errors %}
-                    {{ error.messageTemplate|trans(error.messageParameters, 'validators') }}
-                {% endfor %}
-            </span>
-        {% endif %}
-    {% endspaceless %}
-{% endblock field_errors %}
-
 {% block checkbox_widget %}
     {% if 'choice' not in form.parent.vars.block_prefixes %}
         {% set attr = attr|merge({'class': (attr.class|default('') ~ ' control-standalone')|trim}) %}
@@ -113,17 +101,11 @@
 {% block form_errors %}
     {% spaceless %}
         {% if errors|length > 0 %}
-            <div class="alert alert-danger">
-                <ul>
-                    {% for error in errors %}
-                        <li>{{
-                        error.messagePluralization is null
-                        ? error.messageTemplate|trans(error.messageParameters, 'validators')
-                        : error.messageTemplate|transchoice(error.messagePluralization, error.messageParameters, 'validators')
-                        }}</li>
-                    {% endfor %}
-                </ul>
-            </div>
+            <span class="help-inline">
+                {% for error in errors %}
+                    {{ error.messageTemplate|trans(error.messageParameters, 'validators') }}
+                {% endfor %}
+            </span>
         {% endif %}
     {% endspaceless %}
 {% endblock form_errors %}
