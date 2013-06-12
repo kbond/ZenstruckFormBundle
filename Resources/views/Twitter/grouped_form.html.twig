@@ -1,9 +1,3 @@
-{% if not grouped_form.valid %}
-    {% block grouped_form_errors %}
-        <div class="alert alert-error">This form has errors.</div>
-    {% endblock %}
-{% endif %}
-
 <ul class="nav nav-tabs">
     {% block tabs_header %}
         {% for name in grouped_form.groupNames %}
