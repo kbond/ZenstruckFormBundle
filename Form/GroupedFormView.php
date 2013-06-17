@@ -105,7 +105,7 @@ class GroupedFormView
     public function setGroupsFromForm($form, $defaultGroup)
     {
         foreach ($form as $field) {
-            if ($field->count()) {
+            if ($field->count() && 3 >= count($field->vars['block_prefixes'])) {
                 $this->setGroupsFromForm($field->children, $defaultGroup);
             } else {
                 if ($field->vars['group']) {
