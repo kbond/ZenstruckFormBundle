@@ -46,5 +46,8 @@ class ZenstruckFormExtension extends Extension
         if ($config['form_types']['tunnel_entity']) {
             $loader->load('tunnel_entity_type.xml');
         }
+        if ($config['form_types']['datepicker']) {
+            $loader->load('datepicker_type.xml');
+        }
     }
 }

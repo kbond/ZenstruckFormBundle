@@ -22,6 +22,7 @@ class Configuration implements ConfigurationInterface
                     ->children()
                         ->booleanNode('help')->defaultFalse()->end()
                         ->booleanNode('group')->defaultFalse()->end()
+                        ->booleanNode('datepicker')->defaultFalse()->end()
                         ->booleanNode('tunnel_entity')->defaultFalse()->end()
                         ->booleanNode('ajax_entity')->defaultFalse()->end()
                         ->booleanNode('ajax_entity_controller')->defaultFalse()->end()
