@@ -15,6 +15,21 @@
     {% endspaceless %}
 {% endblock form_row %}
 
+{% block money_widget %}
+    {% spaceless %}
+        {% set currency = money_pattern|replace({'{{ widget }}': ''})|trim %}
+
+        {% if currency %}
+            <div class="input-prepend">
+                <span class="add-on">{{ currency }}</span>
+                {{ block('form_widget_simple') }}
+            </div>
+        {% else %}
+            {{ money_pattern|replace({ '{{ widget }}': block('form_widget_simple') })|raw }}
+        {% endif %}
+    {% endspaceless %}
+{% endblock money_widget %}
+
 {% block checkbox_widget %}
     {% if 'choice' not in form.parent.vars.block_prefixes %}
         {% set attr = attr|merge({'class': (attr.class|default('') ~ ' control-standalone')|trim}) %}
