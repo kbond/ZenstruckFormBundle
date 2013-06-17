@@ -105,11 +105,11 @@ class GroupedFormView
     public function setGroupsFromForm($form, $defaultGroup)
     {
         foreach ($form as $field) {
-            if ($field->hasChildren()) {
+            if ($field->count()) {
                 $this->setGroupsFromForm($field->children, $defaultGroup);
             } else {
                 if ($group = $field->vars['group']) {
-                } elseif ($field->hasParent() && $group = $field->getParent()->vars['group']) {
+                } elseif ($field->parent && $group = $field->getParent()->vars['group']) {
                 } else {
                     $group = $defaultGroup;
 
