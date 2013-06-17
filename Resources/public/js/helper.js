@@ -177,10 +177,21 @@ var ZenstruckFormHelper = {
         });
     },
 
+    initDatePickerHelper: function() {
+        $('input.datepicker').parent().datetimepicker({
+            language: 'en', //todo: Get locale from symfony
+            pickTime: false
+        });
+        $('input.datetimepicker').parent().datetimepicker({
+            language: 'en' //todo: Get locale from symfony
+        });
+    }
+
     initialize: function() {
         this.initFormCollectionHelper();
         this.initPostLinkHelper();
         this.initSelect2Helper();
         this.initTunnelHelper();
+        this.initDatePickerHelper();
     }
 };
