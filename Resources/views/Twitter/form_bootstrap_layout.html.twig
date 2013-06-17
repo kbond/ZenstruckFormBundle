@@ -143,3 +143,23 @@
         </div>
     {% endspaceless %}
 {% endblock %}
+
+{% block zenstruck_datepicker_widget %}
+    {# todo: get format from formtype options! #}
+    <div class="input-append date">
+        <input {{ block('widget_attributes') }} data-format="dd/MM/yyyy" type="text" {% if value is not empty %}value="{{ value }}" {% endif %} />
+        <span class="add-on">
+            <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+        </span>
+    </div>
+{% endblock %}
+
+{% block zenstruck_datetimepicker_widget %}
+    {# todo: get format from formtype options! #}
+    <div class="input-append">
+        <input {{ block('widget_attributes') }} data-format="dd/MM/yyyy hh:mm:ss" type="text" {% if value is not empty %}value="{{ value }}" {% endif %} />
+        <span class="add-on">
+            <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+        </span>
+    </div>
+{% endblock %}
