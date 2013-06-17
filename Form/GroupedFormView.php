@@ -16,8 +16,8 @@ class GroupedFormView
 
     /**
      * @param Form|FormView $form
-     * @param string $defaultGroup
-     * @param array $order
+     * @param string        $defaultGroup
+     * @param array         $order
      */
     public function __construct($form, $defaultGroup = 'Default', $order = array())
     {
@@ -38,15 +38,12 @@ class GroupedFormView
         }
 
         // add fields to groups
-        foreach ($this->form->children as $field) {
-            $group = $field->vars['group'] ?: $defaultGroup;
-            $this->groups[$group][] = $field;
-        }
-
+        $this->setGroupsFromForm($this->form->children, $defaultGroup);
         // filter empty groups
         $this->groups = array_filter($this->groups, function($fields) {
                 return count($fields);
             });
+
     }
 
     public function getForm()
@@ -103,5 +100,23 @@ class GroupedFormView
     public function getVars()
     {
         return $this->form->vars;
+    }
+
+    public function setGroupsFromForm($form, $defaultGroup)
+    {
+        foreach ($form as $field) {
+            if ($field->count()) {
+                $this->setGroupsFromForm($field->children, $defaultGroup);
+            } else {
+                if ($field->vars['group']) {
+                    $group = $field->vars['group'];
+                } elseif ($field->parent && $field->parent->vars['group']) {
+                    $group = $field->parent->vars['group'];
+                } else {
+                    $group = $defaultGroup;
+                }
+                $this->groups[$group][] = $field;
+            }
+        }
     }
 }
