@@ -25,6 +25,7 @@ class Configuration implements ConfigurationInterface
                         ->booleanNode('tunnel_entity')->defaultFalse()->end()
                         ->booleanNode('ajax_entity')->defaultFalse()->end()
                         ->booleanNode('ajax_entity_controller')->defaultFalse()->end()
+                        ->booleanNode('datetime')->defaultFalse()->end()
                     ->end()
                 ->end()
             ->end()

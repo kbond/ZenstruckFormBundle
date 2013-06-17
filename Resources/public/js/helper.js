@@ -177,10 +177,29 @@ var ZenstruckFormHelper = {
         });
     },
 
+    initDateTimePicker: function() {
+        if (!jQuery().datetimepicker) {
+            return;
+        }
+
+        $('.datepicker').each(function() {
+            var $this = $(this);
+            var locale = $this.data('locale');
+            var type = $('input', $this).data('type');
+
+            $this.datetimepicker({
+                language: locale,
+                pickTime: (type === 'datetime' || type === 'time'),
+                pickDate: (type === 'datetime' || type === 'date')
+            });
+        });
+    },
+
     initialize: function() {
         this.initFormCollectionHelper();
         this.initPostLinkHelper();
         this.initSelect2Helper();
         this.initTunnelHelper();
+        this.initDateTimePicker();
     }
 };

@@ -20,6 +20,10 @@ class ZenstruckFormExtension extends Extension
         $config = $processor->processConfiguration($configuration, $configs);
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
 
+        if ($config['form_types']['datetime']) {
+            $loader->load('date_type.xml');
+        }
+
         if ($config['form_types']['help']) {
             $loader->load('help_type.xml');
         }

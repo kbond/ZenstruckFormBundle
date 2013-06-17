@@ -143,3 +143,15 @@
         </div>
     {% endspaceless %}
 {% endblock %}
+
+{% block zenstruck_date_widget %}
+    {% spaceless %}
+        {% set type = 'text' %}
+        {% set attr = attr|merge({'data-format': format, 'data-type': 'date' }) %}
+        <div class="input-append datepicker date" data-locale="fr">
+            {{ block('form_widget_simple') }}
+
+            <a class="add-on"><i data-time-icon="icon-time" data-date-icon="icon-calendar"></i></a>
+        </div>
+    {% endspaceless %}
+{% endblock %}
