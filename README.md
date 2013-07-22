@@ -135,7 +135,7 @@ There are several ways to use this type:
                 ->add('name', 'zenstruck_ajax_entity', array(
                     'class'             => 'AppBundle:MyEntity', // ensure MyEntity::__toString() is defined
                     'use_controller'    => true,
-                    'property'          => 'name`, // the entity property to search by
+                    'property'          => 'name', // the entity property to search by
                     // 'repo_method'    => 'findActive' // for using a custom repository method
                 ))
             ;
