@@ -16,7 +16,7 @@ class AjaxEntityTransformerTest extends WebTestCase
     {
         $client = $this->prepareEnvironment();
         $registry = $client->getContainer()->get('doctrine');
-        $transformer = new AjaxEntityTransformer($registry, 'FormTestBundle:Author', false);
+        $transformer = new AjaxEntityTransformer($registry, 'FormTestBundle:Author', false, 'name');
 
         $author = $registry->getRepository('FormTestBundle:Author')->find(1);
         $transformedValue = $transformer->transform($author);
@@ -30,7 +30,7 @@ class AjaxEntityTransformerTest extends WebTestCase
     {
         $client = $this->prepareEnvironment();
         $registry = $client->getContainer()->get('doctrine');
-        $transformer = new AjaxEntityTransformer($registry, 'FormTestBundle:Author', false);
+        $transformer = new AjaxEntityTransformer($registry, 'FormTestBundle:Author', false, 'name');
 
         $transformedValue = $transformer->reverseTransform(1);
 
@@ -46,7 +46,7 @@ class AjaxEntityTransformerTest extends WebTestCase
     {
         $client = $this->prepareEnvironment();
         $registry = $client->getContainer()->get('doctrine');
-        $transformer = new AjaxEntityTransformer($registry, 'FormTestBundle:Author', true);
+        $transformer = new AjaxEntityTransformer($registry, 'FormTestBundle:Author', true, 'name');
 
         $authors = $registry->getRepository('FormTestBundle:Author')->findAll();
         $transformedValue = $transformer->transform($authors);
@@ -60,7 +60,7 @@ class AjaxEntityTransformerTest extends WebTestCase
     {
         $client = $this->prepareEnvironment();
         $registry = $client->getContainer()->get('doctrine');
-        $transformer = new AjaxEntityTransformer($registry, 'FormTestBundle:Author', true);
+        $transformer = new AjaxEntityTransformer($registry, 'FormTestBundle:Author', true, 'name');
 
         $transformedValue = $transformer->reverseTransform("1,2");
 
@@ -75,14 +75,14 @@ class AjaxEntityTransformerTest extends WebTestCase
     {
         $client = $this->prepareEnvironment();
         $registry = $client->getContainer()->get('doctrine');
-        $transformer = new AjaxEntityTransformer($registry, 'FormTestBundle:Author', false);
+        $transformer = new AjaxEntityTransformer($registry, 'FormTestBundle:Author', false, 'name');
 
         $this->assertNull($transformer->transform(null));
         $this->assertNull($transformer->reverseTransform(null));
 
         $client = $this->prepareEnvironment();
         $registry = $client->getContainer()->get('doctrine');
-        $transformer = new AjaxEntityTransformer($registry, 'FormTestBundle:Author', true);
+        $transformer = new AjaxEntityTransformer($registry, 'FormTestBundle:Author', true, 'name');
 
         $this->assertNull($transformer->transform(null));
         $this->assertTrue(is_array($transformer->reverseTransform(null)));
