@@ -87,7 +87,7 @@ class AjaxEntityTransformer implements DataTransformerInterface
             return (string) $object;
         }
 
-        $accessor = PropertyAccess::createPropertyAccessor();
+        $accessor = PropertyAccess::getPropertyAccessor();
 
         return $accessor->getValue($object, $this->property);
     }
