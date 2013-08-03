@@ -32,7 +32,12 @@ class AjaxEntityType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $transformer = new AjaxEntityTransformer($this->registry, $options['class'], $options['multiple']);
+        $transformer = new AjaxEntityTransformer(
+            $this->registry,
+            $options['class'],
+            $options['multiple'],
+            $options['property']
+        );
 
         $builder->addViewTransformer($transformer);
     }
@@ -100,7 +105,7 @@ class AjaxEntityType extends AbstractType
                 'placeholder'   => 'Choose an option',
                 'use_controller'=> false,
                 'url'           => null,
-                'repo_method'        => null,
+                'repo_method'   => null,
                 'property'      => null,
                 'multiple'      => false
             ));

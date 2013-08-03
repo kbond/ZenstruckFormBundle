@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Form\DataTransformerInterface;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Symfony\Component\Form\Exception\TransformationFailedException;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
@@ -15,11 +16,13 @@ class AjaxEntityTransformer implements DataTransformerInterface
 {
     protected $repo;
     protected $multiple;
+    protected $property;
 
-    public function __construct(ManagerRegistry $registry, $class, $multiple)
+    public function __construct(ManagerRegistry $registry, $class, $multiple, $property)
     {
         $this->repo = $registry->getManager()->getRepository($class);
         $this->multiple = $multiple;
+        $this->property = $property;
     }
 
     public function transform($value)
@@ -30,7 +33,7 @@ class AjaxEntityTransformer implements DataTransformerInterface
             foreach ($value as $entity) {
                 $ret[] = array(
                     'id' => $entity->getId(),
-                    'text' => (string) $entity
+                    'text' => $this->getText($entity)
                 );
             }
 
@@ -40,7 +43,7 @@ class AjaxEntityTransformer implements DataTransformerInterface
         if (is_object($value)) {
             return array(
                 'id' => $value->getId(),
-                'text' => (string) $value
+                'text' => $this->getText($value)
             );
         }
 
@@ -76,5 +79,16 @@ class AjaxEntityTransformer implements DataTransformerInterface
         }
 
         return $entity;
+    }
+
+    protected function getText($object)
+    {
+        if (!$this->property || !class_exists('Symfony\Component\PropertyAccess\PropertyAccess')) {
+            return (string) $object;
+        }
+
+        $accessor = PropertyAccess::createPropertyAccessor();
+
+        return $accessor->getValue($object, $this->property);
     }
 }
