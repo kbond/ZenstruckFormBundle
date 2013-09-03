@@ -1,0 +1,158 @@
+{% extends 'ZenstruckFormBundle:Twitter:form_bootstrap_layout.html.twig' %}
+
+{% block widget_attributes %}
+    {% if type is not defined or (type is defined and type != 'hidden') %}
+        {% set attr = attr|merge({'class': (attr.class|default('') ~ ' form-control')|trim}) %}
+    {% endif %}
+
+    {{ parent() }}
+{% endblock widget_attributes %}
+
+{% block form_row %}
+    {% spaceless %}
+        <div class="form-group {% if errors|length > 0 %}has-error{% endif %}">
+            {{ form_label(form, label|default(null)) }}
+            <div class="col-lg-10">
+                {{ form_widget(form) }}
+                {{ form_errors(form) }}
+                {% if help is defined and help %}
+                    <div class="help-block">{{ help }}</div>
+                {% endif %}
+            </div>
+        </div>
+    {% endspaceless %}
+{% endblock form_row %}
+
+{% block money_widget %}
+    {% spaceless %}
+        {% set currency = money_pattern|replace({'{{ widget }}': ''})|trim %}
+
+        {% if currency %}
+            <div class="input-group">
+                <span class="input-group-addon">{{ currency }}</span>
+                {{ block('form_widget_simple') }}
+            </div>
+        {% else %}
+            {{ money_pattern|replace({ '{{ widget }}': block('form_widget_simple') })|raw }}
+        {% endif %}
+    {% endspaceless %}
+{% endblock money_widget %}
+
+{% block checkbox_widget %}
+    {% if 'choice' not in form.parent.vars.block_prefixes %}
+        {% set attr = attr|merge({'class': (attr.class|default('') ~ ' control-standalone')|trim}) %}
+    {% endif %}
+    {{ parent() }}
+{% endblock checkbox_widget %}
+
+{% block choice_widget_expanded %}
+    {% spaceless %}
+        <div {{ block('widget_container_attributes') }}>
+            {% for child in form %}
+                {{ form_label(child) }}
+            {% endfor %}
+        </div>
+    {% endspaceless %}
+{% endblock choice_widget_expanded %}
+
+{% block form_label %}
+    {% spaceless %}
+        {% set is_multichoice_widget = (checked is defined) and ('choice' in form.parent.vars.block_prefixes) %}
+
+        {% if is_multichoice_widget %}
+            {% set label_attr = label_attr|merge({'class': 'radio' in block_prefixes ? 'radio' : 'checkbox'}) %}
+        {% else %}
+            {% set label_attr = label_attr|merge({'class': 'control-label col-lg-2'}) %}
+        {% endif %}
+        {% if not compound %}
+            {% set label_attr = label_attr|merge({'for': id}) %}
+        {% endif %}
+        {% if required %}
+            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+        {% endif %}
+        {% if label is empty %}
+            {% set label = name|humanize %}
+        {% endif %}
+        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+            {{ label|trans({}, translation_domain) }}
+            {% if is_multichoice_widget %}
+                {{ form_widget(form) }}
+            {% endif %}
+        </label>
+    {% endspaceless %}
+{% endblock form_label %}
+
+{% block collection_widget %}
+    {% spaceless %}
+        {% if prototype is defined %}
+            {% set attr = attr|merge({'data-prototype': block('collection_prototype') }) %}
+        {% endif %}
+        <div {{ block('widget_container_attributes') }}>
+            {{ form_errors(form) }}
+            <div class="form-collection{{ form|length ? '' : ' hide' }}">
+                {% for rows in form %}
+                    {{ _self.collection_field(rows, allow_delete) }}
+                {% endfor %}
+            </div>
+            {{ form_rest(form) }}
+        </div>
+        {% if allow_add %}
+            <a href="#" class="btn btn-info form-collection-add">Add</a>
+        {% endif %}
+    {% endspaceless %}
+{% endblock collection_widget %}
+
+{% block collection_prototype %}
+    {{ _self.collection_field(prototype, allow_delete) }}
+{% endblock collection_prototype %}
+
+{% macro collection_field(rows, allow_delete) %}
+    {% spaceless %}
+        <div class="form-collection-element">
+            {% for row in rows %}
+                {{ form_row(row) }}
+            {% endfor %}
+            {% if allow_delete %}
+                <div class="form-group">
+                    <div class="col-lg-offset-2 col-lg-10">
+                        <a class="btn btn-danger remove" href="#">Delete</a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    {% endspaceless %}
+{% endmacro %}
+
+{% block form_errors %}
+    {% spaceless %}
+        {% if errors|length > 0 %}
+            <span class="help-block">
+                {% for error in errors %}
+                    {{ error.messageTemplate|trans(error.messageParameters, 'validators') }}
+                {% endfor %}
+            </span>
+        {% endif %}
+    {% endspaceless %}
+{% endblock form_errors %}
+
+{% block zenstruck_ajax_entity_widget %}
+    {% spaceless %}
+        {% set type = 'hidden' %}
+        <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+    {% endspaceless %}
+{% endblock %}
+
+{% block zenstruck_tunnel_entity_widget %}
+    {% spaceless %}
+        <input type="hidden" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+        <div class="input-group zenstruck-tunnel-widget">
+            <input type="text" disabled="disabled" value="{{ title }}" class="form-control zenstruck-tunnel-title" />
+            <span class="input-group-btn">
+                {% if not required %}
+                    <a href="#" class="btn btn-default zenstruck-tunnel-clear"><span class="glyphicon glyphicon-remove"></span></a>
+                {% endif %}
+                <a href="#" class="btn btn-default zenstruck-tunnel-select"{% if callback %} data-callback="{{ callback }}"{% endif %}>{{ button_text|trans }}</a>
+            </span>
+        </div>
+    {% endspaceless %}
+{% endblock %}
