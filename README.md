@@ -56,7 +56,7 @@ To use, do one of the following:
     {% form_theme form 'ZenstruckFormBundle:Twitter:form_bootstrap_layout.html.twig' %}
 
     {# for bootstrap 3.x #}
-        {% form_theme form 'ZenstruckFormBundle:Twitter:form_bootstrap3_layout.html.twig' %}
+    {% form_theme form 'ZenstruckFormBundle:Twitter:form_bootstrap3_layout.html.twig' %}
     ```
 
 - Add globally in your `config.yml`:
@@ -404,7 +404,7 @@ $groupedForm = new GroupedFormView($form->createView(), 'Default', array(
 ### Theme Type
 
 Allow you to add theme options to your form fields.  The `theme_options` variable will be
-available in your form theme.  *The bootstrap3 theme currently utilizes*
+available in your form theme.  *The bootstrap3 theme currently utilizes.*
 
 1. Enable in your `config.yml` (disabled by default):
 
