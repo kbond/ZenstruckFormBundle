@@ -52,7 +52,11 @@ To use, do one of the following:
 - Add for a single template:
 
     ```jinja
+    {# for bootstrap 2.x #}
     {% form_theme form 'ZenstruckFormBundle:Twitter:form_bootstrap_layout.html.twig' %}
+
+    {# for bootstrap 3.x #}
+    {% form_theme form 'ZenstruckFormBundle:Twitter:form_bootstrap3_layout.html.twig' %}
     ```
 
 - Add globally in your `config.yml`:
@@ -61,7 +65,11 @@ To use, do one of the following:
     twig:
         form:
             resources:
+                # for bootstrap 2.x
                 - 'ZenstruckFormBundle:Twitter:form_bootstrap_layout.html.twig'
+
+                # for bootstrap 3.x
+                - 'ZenstruckFormBundle:Twitter:form_bootstrap3_layout.html.twig'
     ```
 
 ## FormType Extensions
@@ -392,6 +400,50 @@ $groupedForm = new GroupedFormView($form->createView(), 'Default', array(
     'Bar', 'Foo', 'Default'
 ));
 ```
+
+### Theme Type
+
+Allow you to add theme options to your form fields.  The `theme_options` variable will be
+available in your form theme.  *The bootstrap3 theme currently utilizes.*
+
+1. Enable in your `config.yml` (disabled by default):
+
+    ```yaml
+    zenstruck_form:
+        form_types:
+            theme: true
+    ```
+
+2. Set default theme options in your `config.yml`
+
+    ```yaml
+    zenstruck_form:
+        theme_options:
+            control_width: col-md-4
+            label_width: col-md-2
+            # ...
+    ```
+
+3. Set theme options on a field in your form
+
+    ```php
+    use Symfony\Component\Form\AbstractType;
+    use Symfony\Component\Form\FormBuilderInterface;
+
+    class MyFormType extends AbstractType
+    {
+        public function buildForm(FormBuilderInterface $builder, array $options)
+        {
+            $builder
+                ->add('name', 'text', array(
+                    'theme_options' => array('control_width' => 'col-md-6')
+                ))
+            ;
+        }
+
+        // ...
+    }
+    ```
 
 ## Miscellaneous Javascript helpers
 
