@@ -31,6 +31,11 @@ class ZenstruckFormExtension extends Extension
             $loader->load('group_type.xml');
         }
 
+        if ($config['form_types']['theme']) {
+            $container->setParameter('zenstruck_form.theme_options', $config['theme_options']);
+            $loader->load('theme_type.xml');
+        }
+
         if ($config['form_types']['ajax_entity']) {
             $loader->load('ajax_entity_type.xml');
         }
