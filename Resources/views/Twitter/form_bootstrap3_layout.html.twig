@@ -12,7 +12,8 @@
     {% spaceless %}
         <div class="form-group {% if errors|length > 0 %}has-error{% endif %}">
             {{ form_label(form, label|default(null)) }}
-            <div class="col-lg-10">
+            {% set ctrl_width = theme_options.control_width is defined ? theme_options.control_width : 'col-md-10' %}
+            <div class="{{ ctrl_width }}">
                 {{ form_widget(form) }}
                 {{ form_errors(form) }}
                 {% if help is defined and help %}
@@ -62,7 +63,8 @@
         {% if is_multichoice_widget %}
             {% set label_attr = label_attr|merge({'class': 'radio' in block_prefixes ? 'radio' : 'checkbox'}) %}
         {% else %}
-            {% set label_attr = label_attr|merge({'class': 'control-label col-lg-2'}) %}
+            {% set lbl_width = theme_options.label_width is defined ? theme_options.control_width : 'col-md-2' %}
+            {% set label_attr = label_attr|merge({'class': 'control-label ' ~ lbl_width}) %}
         {% endif %}
         {% if not compound %}
             {% set label_attr = label_attr|merge({'for': id}) %}
