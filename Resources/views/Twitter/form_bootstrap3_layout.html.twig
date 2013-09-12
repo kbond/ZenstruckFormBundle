@@ -1,7 +1,7 @@
-{% extends 'ZenstruckFormBundle:Twitter:form_bootstrap_layout.html.twig' %}
+{% extends 'form_div_layout.html.twig' %}
 
 {% block widget_attributes %}
-    {% if type is not defined or (type is defined and type != 'hidden') %}
+    {% if type is defined and type != 'hidden' %}
         {% set attr = attr|merge({'class': (attr.class|default('') ~ ' form-control')|trim}) %}
     {% endif %}
 
