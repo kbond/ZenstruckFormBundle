@@ -68,7 +68,7 @@
         {% if is_multichoice_widget %}
             {% set label_attr = label_attr|merge({'class': 'radio' in block_prefixes ? 'radio' : 'checkbox'}) %}
         {% else %}
-            {% set lbl_width = theme_options.label_width is defined ? theme_options.control_width : 'col-md-2' %}
+            {% set lbl_width = theme_options.label_width is defined ? theme_options.label_width : 'col-md-2' %}
             {% set label_attr = label_attr|merge({'class': 'control-label ' ~ lbl_width}) %}
         {% endif %}
         {% if not compound %}
