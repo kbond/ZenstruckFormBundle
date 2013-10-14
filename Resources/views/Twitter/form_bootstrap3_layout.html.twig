@@ -135,7 +135,11 @@
         {% if errors|length > 0 %}
             <span class="help-block">
                 {% for error in errors %}
-                    {{ error.messageTemplate|trans(error.messageParameters, 'validators') }}
+                    {% if error.messagePluralization > 1 %}
+                        {{ error.messageTemplate|transchoice(error.messagePluralization, error.messageParameters, 'validators') }}
+                    {% else %}
+                        {{ error.messageTemplate|trans(error.messageParameters, 'validators') }}
+                    {% endif %}
                 {% endfor %}
             </span>
         {% endif %}
