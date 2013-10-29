@@ -118,11 +118,7 @@
         {% if errors|length > 0 %}
             <span class="help-inline">
                 {% for error in errors %}
-                    {% if error.messagePluralization > 1 %}
-                        {{ error.messageTemplate|transchoice(error.messagePluralization, error.messageParameters, 'validators') }}
-                    {% else %}
-                        {{ error.messageTemplate|trans(error.messageParameters, 'validators') }}
-                    {% endif %}
+                    {{ error.message }}
                 {% endfor %}
             </span>
         {% endif %}
