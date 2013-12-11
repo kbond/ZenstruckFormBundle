@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Zenstruck\Bundle\FormBundle\Tests\Form\Type;
 
 use Symfony\Bundle\FrameworkBundle\Client;
@@ -102,8 +101,8 @@ class AjaxEntityTypeTest extends WebTestCase
 
     /**
      * @param \Symfony\Bundle\FrameworkBundle\Client $client
-     * @param array $formOptions
-     * @param bool $controllerEnabled
+     * @param array                                  $formOptions
+     * @param bool                                   $controllerEnabled
      *
      * @return \Symfony\Component\Form\FormView
      */
@@ -130,13 +129,14 @@ class AjaxEntityTypeTest extends WebTestCase
 
     /**
      * @param \Symfony\Bundle\FrameworkBundle\Client $client
-     * @param bool $controllerEnabled
+     * @param bool                                   $controllerEnabled
      *
      * @return \Zenstruck\Bundle\FormBundle\Form\AjaxEntityManager
      */
     protected function createManager(Client $client, $controllerEnabled = true)
     {
         $registry = $client->getContainer()->get('doctrine');
+
         return new AjaxEntityManager($registry, '1234', $controllerEnabled);
     }
 }

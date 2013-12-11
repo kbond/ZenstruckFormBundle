@@ -4,7 +4,6 @@ namespace Zenstruck\Bundle\FormBundle\Tests\Form;
 
 use Zenstruck\Bundle\FormBundle\Form\AjaxEntityManager;
 
-
 class AjaxEntityManagerTest extends \PHPUnit_Framework_TestCase
 {
     public function testEncryption()

@@ -3,7 +3,6 @@
 namespace Zenstruck\Bundle\FormBundle\Tests\Form;
 
 use Symfony\Component\Form\FormBuilder;
-use Symfony\Component\Form\Forms;
 use Symfony\Component\Validator\Constraints\Collection;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Zenstruck\Bundle\FormBundle\Form\GroupedFormView;

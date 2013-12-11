@@ -40,7 +40,7 @@ class GroupedFormView
         // add fields to groups
         $this->setGroupsFromForm($this->form->children, $defaultGroup);
         // filter empty groups
-        $this->groups = array_filter($this->groups, function($fields) {
+        $this->groups = array_filter($this->groups, function ($fields) {
                 return count($fields);
             });
 
