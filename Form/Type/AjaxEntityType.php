@@ -10,7 +10,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\Exception\MissingOptionsException;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Routing\Router;
+use Symfony\Component\Routing\RouterInterface;
 use Zenstruck\Bundle\FormBundle\Form\AjaxEntityManager;
 use Zenstruck\Bundle\FormBundle\Form\DataTransformer\AjaxEntityTransformer;
 
@@ -23,7 +23,7 @@ class AjaxEntityType extends AbstractType
     protected $router;
     protected $manager;
 
-    public function __construct(ManagerRegistry $registry, Router $router, AjaxEntityManager $manager = null)
+    public function __construct(ManagerRegistry $registry, RouterInterface $router, AjaxEntityManager $manager = null)
     {
         $this->registry = $registry;
         $this->router = $router;
