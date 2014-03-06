@@ -29,6 +29,7 @@ class AjaxEntityController
         $method = $request->request->get('method');
         $entity = $request->request->get('entity');
         $query = $request->request->get('q');
+        $extra = $request->request->get('extra');
 
         $results = array();
 
@@ -36,7 +37,7 @@ class AjaxEntityController
             if ($property) {
                 $results = $this->manager->findEntitiesByProperty($entity, $property, $query);
             } elseif ($method) {
-                $results = $this->manager->findEntitiesByMethod($entity, $method, $query);
+                $results = $this->manager->findEntitiesByMethod($entity, $method, $query, $extra);
             }
         }
 
