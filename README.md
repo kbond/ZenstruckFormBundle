@@ -145,6 +145,7 @@ There are several ways to use this type:
                     'use_controller'    => true,
                     'property'          => 'name', // the entity property to search by
                     // 'repo_method'    => 'findActive' // for using a custom repository method
+                    // 'extra'          => array() // for adding extra data in the ajax request (only applicable when using repo_method)
                 ))
             ;
         }
