@@ -19,7 +19,7 @@ class AjaxEntityManager
         $this->secret = $secret;
     }
 
-    public function findEntitiesByMethod($entity, $method, $query, $extra)
+    public function findEntitiesByMethod($entity, $method, $query, $extra = array())
     {
         $className = $this->decriptString($entity);
         $method = $this->decriptString($method);
