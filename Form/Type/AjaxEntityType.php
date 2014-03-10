@@ -11,6 +11,8 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\Exception\MissingOptionsException;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Serializer;
 use Zenstruck\Bundle\FormBundle\Form\AjaxEntityManager;
 use Zenstruck\Bundle\FormBundle\Form\DataTransformer\AjaxEntityTransformer;
 
@@ -96,6 +98,11 @@ class AjaxEntityType extends AbstractType
         }
 
         $view->vars['attr']['data-placeholder'] = $options['placeholder'];
+
+        $extraData = $options['extra_data'];
+
+        $serializer = new Serializer(array(), array(new JsonEncoder()));
+        $view->vars['attr']['data-extra-data'] = $serializer->serialize($extraData, 'json');
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
@@ -107,7 +114,8 @@ class AjaxEntityType extends AbstractType
                 'url'           => null,
                 'repo_method'   => null,
                 'property'      => null,
-                'multiple'      => false
+                'multiple'      => false,
+                'extra_data'    => array()
             ));
     }
 

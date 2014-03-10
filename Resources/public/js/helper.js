@@ -99,6 +99,7 @@ var ZenstruckFormHelper = {
         var method = $element.data('method');
         var property = $element.data('property');
         var entity = $element.data('entity');
+        var extraData = $element.data('extra-data');
 
         var options = {
             minimumInputLength: 1,
@@ -122,7 +123,8 @@ var ZenstruckFormHelper = {
                         q: term,
                         entity: entity,
                         property: property,
-                        method: method
+                        method: method,
+                        extra: extraData
                     }
                 },
                 results: function (data) {
