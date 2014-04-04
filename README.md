@@ -10,6 +10,8 @@ Provides Twitter Bootstrap form theme, useful FormType Extensions and javascript
 
     ```
     composer require zenstruck/form-bundle
+    
+    Version number: 1.4.1
     ```
 
 2. *Optional* If using the `ajax_entity_controller` feature, add `zendframework/zend-crypt` to your `composer.json`:
@@ -25,6 +27,8 @@ Provides Twitter Bootstrap form theme, useful FormType Extensions and javascript
 
     ```
     composer require zenstruck/slugify-bundle
+    
+    Version number: 1.4.1
     ```
 
 4. Register the bundle with Symfony2:
