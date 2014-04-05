@@ -25,7 +25,7 @@ Provides Twitter Bootstrap form theme, useful FormType Extensions and javascript
 [zenstruck/slugify-bundle](https://github.com/kbond/ZenstruckSlugifyBundle) to your `composer.json`
 
     ```
-    composer require zenstruck/slugify-bundle:~1.1
+    composer require zenstruck/slugify-bundle:~1.0
     
     ```
 
