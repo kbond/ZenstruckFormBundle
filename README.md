@@ -44,10 +44,10 @@ Provides Twitter Bootstrap form theme, useful FormType Extensions and javascript
         // ...
     }
     ```
-5. If using 'Select2', be sure to download the required files from http://ivaynberg.github.io/select2/ and include the files in your template/s.
+5. If using 'Select2', be sure to download the required files from http://ivaynberg.github.io/select2/ and include the files in your template. 
 
     ```
-    //base.html.twig
+    //base.html.twig Example
     
     //...
     {% block stylesheets %}
@@ -496,7 +496,7 @@ Adds Symfony2 form collection 'add' and 'delete' button functionality.  See the
 [Symfony2 docs](http://symfony.com/doc/current/cookbook/form/form_collections.html).  This works out of the box when
 using the `form_bootstrap_layout.html.twig` form layout provided by this bundle. 
 
-**Note:** Do not add the Protoype (<ul class="product" data-prototype="{{ form_widget(form.product.vars.prototype)|e }}">) or Javascript provided in the Symfony tutorial.
+**Note:** Do not add the javascript provided in the [Symfony2 cookbook article](http://symfony.com/doc/current/cookbook/form/form_collections.html)
 
 ##
 
