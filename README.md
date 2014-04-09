@@ -44,6 +44,22 @@ Provides Twitter Bootstrap form theme, useful FormType Extensions and javascript
         // ...
     }
     ```
+5. If using 'Select2', be sure to download the required files from http://ivaynberg.github.io/select2/ and include the files in your template/s.
+
+    ```
+    //base.html.twig
+    
+    //...
+    {% block stylesheets %}
+        <link href="{{ asset('path/to/select2.css') }}" type="text/css" rel="stylesheet" />
+    
+    //...
+    {% block javascripts %}
+        <script type="text/javascript" src="{{ asset('path/to/select2.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('path/to/zenstruckform/js/helper.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('path/to/zenstruckform/js/script.js') }}"></script>
+    ```
+
 
 ## Twitter Bootstrap form layout
 
@@ -476,9 +492,13 @@ Enable with `ZenstruckFormHelper.initPostLinkHelper()`
 
 ### FormCollectionHelper
 
-Adds Symfony2 form collection add and delete button functionality.  See the
+Adds Symfony2 form collection 'add' and 'delete' button functionality.  See the
 [Symfony2 docs](http://symfony.com/doc/current/cookbook/form/form_collections.html).  This works out of the box when
-using the `form_bootstrap_layout.html.twig` form layout provided by this bundle.
+using the `form_bootstrap_layout.html.twig` form layout provided by this bundle. 
+
+**Note:** Do not add the Javascript provided in the Symfony tutorial.
+
+##
 
 Enable with `ZenstruckFormHelper.initPostLinkHelper()`
 
