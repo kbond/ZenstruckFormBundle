@@ -496,7 +496,7 @@ Adds Symfony2 form collection 'add' and 'delete' button functionality.  See the
 [Symfony2 docs](http://symfony.com/doc/current/cookbook/form/form_collections.html).  This works out of the box when
 using the `form_bootstrap_layout.html.twig` form layout provided by this bundle. 
 
-**Note:** Do not add the Javascript provided in the Symfony tutorial.
+**Note:** Do not add the Protoype (<ul class="product" data-prototype="{{ form_widget(form.product.vars.prototype)|e }}">) or Javascript provided in the Symfony tutorial.
 
 ##
 
