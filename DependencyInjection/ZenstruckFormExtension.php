@@ -25,8 +25,9 @@ class ZenstruckFormExtension extends Extension
         }
 
         if ($config['form_types']['group']) {
-            if (!array_key_exists('ZenstruckSlugifyBundle', $container->getParameter('kernel.bundles'))) {
-                throw new \Exception('ZenstruckSlugifyBundle must be installed in order to use the "group" type.');
+            $bundles = $container->getParameter('kernel.bundles');
+            if (!isset($bundles['ZenstruckSlugifyBundle']) && !isset($bundles['CocurSlugifyBundle'])) {
+                throw new \Exception('ZenstruckSlugifyBundle or CocurSlugifyBundle must be installed in order to use the "group" type.');
             }
             $loader->load('group_type.xml');
         }

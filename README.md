@@ -21,10 +21,10 @@ Provides Twitter Bootstrap form theme, useful FormType Extensions and javascript
     **Note:** Version 2.1.1 of `zend-crypt` does not have it's autoloader configured correctly.
 
 3. *Optional* If using the Grouped form feature, add
-[zenstruck/slugify-bundle](https://github.com/kbond/ZenstruckSlugifyBundle) to your `composer.json`
+[cocur/slugify](https://github.com/cocur/slugify#symfony2) to your `composer.json`
 
     ```
-    composer require zenstruck/slugify-bundle:~1.0
+    composer require cocur/slugify:~0.8
     ```
 
 4. Register the bundle with Symfony2:
@@ -39,20 +39,20 @@ Provides Twitter Bootstrap form theme, useful FormType Extensions and javascript
             new Zenstruck\Bundle\FormBundle\ZenstruckFormBundle(),
 
             // enable if you want to use the grouped form
-            // new Zenstruck\SlugifyBundle\ZenstruckSlugifyBundle()
+            // new Cocur\Slugify\Bridge\Symfony\CocurSlugifyBundle()
         );
         // ...
     }
     ```
-5. If using 'Select2', be sure to download the required files from http://ivaynberg.github.io/select2/ and include the files in your template. 
+5. If using 'Select2', be sure to download the required files from http://ivaynberg.github.io/select2/ and include the files in your template.
 
     ```
     //base.html.twig Example
-    
+
     //...
     {% block stylesheets %}
         <link href="{{ asset('path/to/select2.css') }}" type="text/css" rel="stylesheet" />
-    
+
     //...
     {% block javascripts %}
         <script type="text/javascript" src="{{ asset('path/to/select2.js') }}"></script>
@@ -494,7 +494,7 @@ Enable with `ZenstruckFormHelper.initPostLinkHelper()`
 
 Adds Symfony2 form collection 'add' and 'delete' button functionality.  See the
 [Symfony2 docs](http://symfony.com/doc/current/cookbook/form/form_collections.html).  This works out of the box when
-using the `form_bootstrap_layout.html.twig` form layout provided by this bundle. 
+using the `form_bootstrap_layout.html.twig` form layout provided by this bundle.
 
 **Note:** Do not add the javascript provided in the [Symfony2 cookbook article](http://symfony.com/doc/current/cookbook/form/form_collections.html)
 
