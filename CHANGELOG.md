@@ -1,3 +1,8 @@
+## v1.5.1
+
+- 718b285 switch from ZenstruckSlugifyBundle to CocurSlugifyBundle (Kevin Bond)
+- ad323de added changelog (Kevin Bond)
+
 ## v1.5.0
 
 - 5eb8da6 Update README.md (doughayward0)
