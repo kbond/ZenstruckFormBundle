@@ -500,7 +500,7 @@ using the `form_bootstrap_layout.html.twig` form layout provided by this bundle.
 
 ##
 
-Enable with `ZenstruckFormHelper.initPostLinkHelper()`
+Enable with `ZenstruckFormHelper.initFormCollectionHelper()`
 
 ## Full default config
 
