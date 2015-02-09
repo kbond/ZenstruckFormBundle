@@ -163,3 +163,8 @@
         </div>
     {% endspaceless %}
 {% endblock %}
+
+{% block textarea_widget -%}
+    {% set type = 'textarea' %}
+    {{ parent() }}
+{%- endblock textarea_widget %}
