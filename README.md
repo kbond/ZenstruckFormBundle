@@ -2,7 +2,7 @@
 
 Provides Twitter Bootstrap form theme, useful FormType Extensions and javascript helpers
 
-[View Demo](http://sandbox.zenstruck.com/article/edit/random)
+[View Demo](http://sandbox.zenstruck.com/articles/edit/random)
 
 ## Installation
 
