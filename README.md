@@ -161,7 +161,7 @@ There are several ways to use this type:
                     'use_controller'    => true,
                     'property'          => 'name', // the entity property to search by
                     // 'repo_method'    => 'findActive' // for using a custom repository method
-                    // 'extra'          => array() // for adding extra data in the ajax request (only applicable when using repo_method)
+                    // 'extra_data'     => array() // for adding extra data in the ajax request (only applicable when using repo_method)
                 ))
             ;
         }
@@ -214,6 +214,8 @@ There are several ways to use this type:
 * `placeholder`: The Select2 placeholder text. Default: *Choose an option*
 * `multiple`: Whether this is allows for multiple values. Default: *false*
 * `use_controller`: Whether to use the bundled controller or not (``).  Default: *false*
+* `repo_method`: For using a custom repository method. Default: *null*
+* `extra_data`: For adding extra data in the ajax request (only applicable when using repo_method). Default *array()*
 
 #### Select2 Javascript Helper
 
