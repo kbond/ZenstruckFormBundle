@@ -98,6 +98,8 @@ class AjaxEntityType extends AbstractType
         }
 
         $view->vars['attr']['data-placeholder'] = $options['placeholder'];
+        
+        $view->vars['attr']['data-minimum-input-length'] = $options['minimum_input_length'];
 
         $extraData = $options['extra_data'];
 
@@ -115,6 +117,7 @@ class AjaxEntityType extends AbstractType
                 'repo_method'   => null,
                 'property'      => null,
                 'multiple'      => false,
+        		'minimum_input_length' => 3,
                 'extra_data'    => array()
             ));
     }
