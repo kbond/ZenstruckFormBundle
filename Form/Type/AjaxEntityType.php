@@ -111,14 +111,14 @@ class AjaxEntityType extends AbstractType
     {
         $resolver->setRequired(array('class'));
         $resolver->setDefaults(array(
-                'placeholder'   => 'Choose an option',
-                'use_controller'=> false,
-                'url'           => null,
-                'repo_method'   => null,
-                'property'      => null,
-                'multiple'      => false,
-        		'minimum_input_length' => 3,
-                'extra_data'    => array()
+                'placeholder'          => 'Choose an option',
+                'use_controller'       => false,
+                'url'                  => null,
+                'repo_method'          => null,
+                'property'             => null,
+                'multiple'             => false,
+                'minimum_input_length' => 3,
+                'extra_data'           => array()
             ));
     }
 
