@@ -1,8 +1,8 @@
 # ZenstruckFormBundle
 
-Provides Twitter Bootstrap form theme, useful FormType Extensions and javascript helpers
+Provides Twitter Bootstrap form theme, useful FormType Extensions and javascript helpers.
 
-[View Demo](http://sandbox.zenstruck.com/articles/edit/random)
+[View Example Source Code](https://github.com/kbond/sandbox)
 
 ## Installation
 
