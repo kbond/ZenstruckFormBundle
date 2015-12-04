@@ -101,11 +101,22 @@ var ZenstruckFormHelper = {
         var entity = $element.data('entity');
         var minimumInputLength = $element.data('minimum-input-length');
         var extraData = $element.data('extra-data');
+        // Add icon in result items template
+        var formatResult = function(result, container, query, escapeMarkup) {
+            var markup=[];
+            if (result.icon) {
+                markup.push(result.icon+" ");
+            }
+            window.Select2.util.markMatch(result.text, query.term, markup, escapeMarkup);
+
+            return markup.join("");
+        };
 
         var options = {
             minimumInputLength: minimumInputLength,
             allowClear: !required,
             multiple: multiple,
+            formatResult: formatResult,
             placeholder: function(element) {
                 return $(element).data('placeholder');
             },
