@@ -1,7 +1,5 @@
 {% extends 'form_div_layout.html.twig' %}
 
-{% import _self as macros %}
-
 {% block widget_attributes %}
     {% if type is defined and type != 'hidden' %}
         {% set attr = attr|merge({'class': (attr.class|default('') ~ ' form-control')|trim}) %}
@@ -92,6 +90,7 @@
 {% endblock form_label %}
 
 {% block collection_widget %}
+    {% import _self as macros %}
     {% spaceless %}
         {% if prototype is defined %}
             {% set attr = attr|merge({'data-prototype': block('collection_prototype') }) %}
@@ -112,6 +111,7 @@
 {% endblock collection_widget %}
 
 {% block collection_prototype %}
+    {% import _self as macros %}
     {{ macros.collection_field(prototype, allow_delete) }}
 {% endblock collection_prototype %}
 

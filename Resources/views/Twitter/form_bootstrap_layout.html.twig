@@ -1,7 +1,5 @@
 {% extends 'form_div_layout.html.twig' %}
 
-{% import _self as macros %}
-
 {% block form_row %}
     {% spaceless %}
         <div class="control-group {% if errors|length > 0 %}error{% endif %}">
@@ -77,6 +75,7 @@
 {% endblock form_label %}
 
 {% block collection_widget %}
+    {% import _self as macros %}
     {% spaceless %}
         {% if prototype is defined %}
             {% set attr = attr|merge({'data-prototype': block('collection_prototype') }) %}
@@ -97,6 +96,7 @@
 {% endblock collection_widget %}
 
 {% block collection_prototype %}
+    {% import _self as macros %}
     {{ macros.collection_field(prototype, allow_delete) }}
 {% endblock collection_prototype %}
 
