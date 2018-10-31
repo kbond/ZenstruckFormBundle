@@ -1,5 +1,7 @@
 {% extends 'form_div_layout.html.twig' %}
 
+{% import _self as macros %}
+
 {% block widget_attributes %}
     {% if type is defined and type != 'hidden' %}
         {% set attr = attr|merge({'class': (attr.class|default('') ~ ' form-control')|trim}) %}
@@ -98,7 +100,7 @@
             {{ form_errors(form) }}
             <div class="form-collection{{ form|length ? '' : ' hide' }}">
                 {% for rows in form %}
-                    {{ _self.collection_field(rows, allow_delete) }}
+                    {{ macros.collection_field(rows, allow_delete) }}
                 {% endfor %}
             </div>
             {{ form_rest(form) }}
@@ -110,7 +112,7 @@
 {% endblock collection_widget %}
 
 {% block collection_prototype %}
-    {{ _self.collection_field(prototype, allow_delete) }}
+    {{ macros.collection_field(prototype, allow_delete) }}
 {% endblock collection_prototype %}
 
 {% macro collection_field(rows, allow_delete) %}

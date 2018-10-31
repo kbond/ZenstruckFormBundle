@@ -1,5 +1,7 @@
 {% extends 'form_div_layout.html.twig' %}
 
+{% import _self as macros %}
+
 {% block form_row %}
     {% spaceless %}
         <div class="control-group {% if errors|length > 0 %}error{% endif %}">
@@ -83,7 +85,7 @@
             {{ form_errors(form) }}
             <div class="form-collection{{ form|length ? '' : ' hide' }}">
                 {% for rows in form %}
-                    {{ _self.collection_field(rows, allow_delete) }}
+                    {{ macros.collection_field(rows, allow_delete) }}
                 {% endfor %}
             </div>
             {{ form_rest(form) }}
@@ -95,7 +97,7 @@
 {% endblock collection_widget %}
 
 {% block collection_prototype %}
-    {{ _self.collection_field(prototype, allow_delete) }}
+    {{ macros.collection_field(prototype, allow_delete) }}
 {% endblock collection_prototype %}
 
 {% macro collection_field(rows, allow_delete) %}
