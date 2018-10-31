@@ -11,7 +11,7 @@
     <services>
         <service id="zenstruck_form.theme_type" class="%zenstruck_form.theme_type.class%">
             <argument>%zenstruck_form.theme_options%</argument>
-            <tag name="form.type_extension" alias="form" />
+            <tag name="form.type_extension" extended_type="Symfony\Component\Form\Extension\Core\Type\FormType" />
         </service>
     </services>
 </container>

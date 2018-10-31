@@ -13,7 +13,7 @@
             <argument type="service" id="doctrine" />
             <argument type="service" id="router" />
             <argument type="service" id="zenstruck_form.ajax_entity_manager" on-invalid="null" />
-            <tag name="form.type" alias="zenstruck_ajax_entity" />
+            <tag name="form.type" />
         </service>
     </services>
 </container>

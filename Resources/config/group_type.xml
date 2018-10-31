@@ -10,7 +10,7 @@
 
     <services>
         <service id="zenstruck_form.group_type" class="%zenstruck_form.group_type.class%">
-            <tag name="form.type_extension" alias="form" />
+            <tag name="form.type_extension" extended_type="Symfony\Component\Form\Extension\Core\Type\FormType" />
         </service>
     </services>
 </container>
