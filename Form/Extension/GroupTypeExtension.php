@@ -3,10 +3,11 @@
 namespace Zenstruck\Bundle\FormBundle\Form\Extension;
 
 use Symfony\Component\Form\AbstractTypeExtension;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
@@ -23,15 +24,15 @@ class GroupTypeExtension extends AbstractTypeExtension
         $view->vars['group'] = $form->getConfig()->getAttribute('group');
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-                'group' => null,
-            ));
+            'group' => null,
+        ));
     }
 
     public function getExtendedType()
     {
-        return 'form';
+        return FormType::class;
     }
 }

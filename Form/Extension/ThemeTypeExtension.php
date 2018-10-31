@@ -3,10 +3,11 @@
 namespace Zenstruck\Bundle\FormBundle\Form\Extension;
 
 use Symfony\Component\Form\AbstractTypeExtension;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
@@ -30,15 +31,15 @@ class ThemeTypeExtension extends AbstractTypeExtension
         $view->vars['theme_options'] = $form->getConfig()->getAttribute('theme_options');
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-                'theme_options' => $this->options,
-            ));
+            'theme_options' => $this->options,
+        ));
     }
 
     public function getExtendedType()
     {
-        return 'form';
+        return FormType::class;
     }
 }
