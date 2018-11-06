@@ -42,10 +42,6 @@ class ZenstruckFormExtension extends Extension
         }
 
         if ($config['form_types']['ajax_entity_controller']) {
-            if (!class_exists('\Zend\Crypt\BlockCipher')) {
-                throw new \Exception('zendframework/zend-crypt must be installed to use the ajax_entity_controller feature.');
-            }
-
             $loader->load('ajax_entity_controller.xml');
         }
 

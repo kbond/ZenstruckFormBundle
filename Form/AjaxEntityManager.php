@@ -71,6 +71,10 @@ class AjaxEntityManager
      */
     protected function getBlockCipher()
     {
+        if (!class_exists('\Zend\Crypt\BlockCipher')) {
+            throw new \Exception('zendframework/zend-crypt must be installed to use the ajax_entity_controller feature.');
+        }
+
         $blockCipher = BlockCipher::factory('mcrypt', array('algo' => 'aes'));
         $blockCipher->setKey($this->secret);
 
