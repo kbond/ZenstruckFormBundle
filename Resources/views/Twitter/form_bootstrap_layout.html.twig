@@ -1,33 +1,29 @@
 {% extends 'form_div_layout.html.twig' %}
 
 {% block form_row %}
-    {% spaceless %}
-        <div class="control-group {% if errors|length > 0 %}error{% endif %}">
-            {{ form_label(form, label|default(null)) }}
-            <div class="controls">
-                {{ form_widget(form) }}
-                {{ form_errors(form) }}
-                {% if help is defined and help %}
-                    <div class="help-block">{{ help }}</div>
-                {% endif %}
-            </div>
+    <div class="control-group {% if errors|length > 0 %}error{% endif %}">
+        {{ form_label(form, label|default(null)) }}
+        <div class="controls">
+            {{ form_widget(form) }}
+            {{ form_errors(form) }}
+            {% if help is defined and help %}
+                <div class="help-block">{{ help }}</div>
+            {% endif %}
         </div>
-    {% endspaceless %}
+    </div>
 {% endblock form_row %}
 
 {% block money_widget %}
-    {% spaceless %}
-        {% set currency = money_pattern|replace({'{{ widget }}': ''})|trim %}
+    {% set currency = money_pattern|replace({'{{ widget }}': ''})|trim %}
 
-        {% if currency %}
-            <div class="input-prepend">
-                <span class="add-on">{{ currency }}</span>
-                {{ block('form_widget_simple') }}
-            </div>
-        {% else %}
-            {{ money_pattern|replace({ '{{ widget }}': block('form_widget_simple') })|raw }}
-        {% endif %}
-    {% endspaceless %}
+    {% if currency %}
+        <div class="input-prepend">
+            <span class="add-on">{{ currency }}</span>
+            {{ block('form_widget_simple') }}
+        </div>
+    {% else %}
+        {{ money_pattern|replace({ '{{ widget }}': block('form_widget_simple') })|raw }}
+    {% endif %}
 {% endblock money_widget %}
 
 {% block checkbox_widget %}
@@ -38,61 +34,55 @@
 {% endblock checkbox_widget %}
 
 {% block choice_widget_expanded %}
-    {% spaceless %}
-        <div {{ block('widget_container_attributes') }}>
-            {% for child in form %}
-                {{ form_label(child) }}
-            {% endfor %}
-        </div>
-    {% endspaceless %}
+    <div {{ block('widget_container_attributes') }}>
+        {% for child in form %}
+            {{ form_label(child) }}
+        {% endfor %}
+    </div>
 {% endblock choice_widget_expanded %}
 
 {% block form_label %}
-    {% spaceless %}
-        {% set is_multichoice_widget = (checked is defined) and ('choice' in form.parent.vars.block_prefixes) %}
+    {% set is_multichoice_widget = (checked is defined) and ('choice' in form.parent.vars.block_prefixes) %}
 
+    {% if is_multichoice_widget %}
+        {% set label_attr = label_attr|merge({'class': 'radio' in block_prefixes ? 'radio' : 'checkbox'}) %}
+    {% else %}
+        {% set label_attr = label_attr|merge({'class': 'control-label'}) %}
+    {% endif %}
+    {% if not compound %}
+        {% set label_attr = label_attr|merge({'for': id}) %}
+    {% endif %}
+    {% if required %}
+        {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+    {% endif %}
+    {% if label is empty %}
+        {% set label = name|humanize %}
+    {% endif %}
+    <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+        {{ label|trans({}, translation_domain) }}
         {% if is_multichoice_widget %}
-            {% set label_attr = label_attr|merge({'class': 'radio' in block_prefixes ? 'radio' : 'checkbox'}) %}
-        {% else %}
-            {% set label_attr = label_attr|merge({'class': 'control-label'}) %}
+            {{ form_widget(form) }}
         {% endif %}
-        {% if not compound %}
-            {% set label_attr = label_attr|merge({'for': id}) %}
-        {% endif %}
-        {% if required %}
-            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
-        {% endif %}
-        {% if label is empty %}
-            {% set label = name|humanize %}
-        {% endif %}
-        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
-            {{ label|trans({}, translation_domain) }}
-            {% if is_multichoice_widget %}
-                {{ form_widget(form) }}
-            {% endif %}
-        </label>
-    {% endspaceless %}
+    </label>
 {% endblock form_label %}
 
 {% block collection_widget %}
     {% import _self as macros %}
-    {% spaceless %}
-        {% if prototype is defined %}
-            {% set attr = attr|merge({'data-prototype': block('collection_prototype') }) %}
-        {% endif %}
-        <div {{ block('widget_container_attributes') }}>
-            {{ form_errors(form) }}
-            <div class="form-collection{{ form|length ? '' : ' hide' }}">
-                {% for rows in form %}
-                    {{ macros.collection_field(rows, allow_delete) }}
-                {% endfor %}
-            </div>
-            {{ form_rest(form) }}
+    {% if prototype is defined %}
+        {% set attr = attr|merge({'data-prototype': block('collection_prototype') }) %}
+    {% endif %}
+    <div {{ block('widget_container_attributes') }}>
+        {{ form_errors(form) }}
+        <div class="form-collection{{ form|length ? '' : ' hide' }}">
+            {% for rows in form %}
+                {{ macros.collection_field(rows, allow_delete) }}
+            {% endfor %}
         </div>
-        {% if allow_add %}
-            <a href="#" class="btn btn-info form-collection-add">Add</a>
-        {% endif %}
-    {% endspaceless %}
+        {{ form_rest(form) }}
+    </div>
+    {% if allow_add %}
+        <a href="#" class="btn btn-info form-collection-add">Add</a>
+    {% endif %}
 {% endblock collection_widget %}
 
 {% block collection_prototype %}
@@ -101,47 +91,39 @@
 {% endblock collection_prototype %}
 
 {% macro collection_field(rows, allow_delete) %}
-    {% spaceless %}
-        <div class="form-collection-element">
-            {% for row in rows %}
-                {{ form_row(row) }}
-            {% endfor %}
-            {% if allow_delete %}
-                <div class="form-actions">
-                    <a class="btn btn-danger remove" href="#">Delete</a>
-                </div>
-            {% endif %}
-        </div>
-    {% endspaceless %}
+    <div class="form-collection-element">
+        {% for row in rows %}
+            {{ form_row(row) }}
+        {% endfor %}
+        {% if allow_delete %}
+            <div class="form-actions">
+                <a class="btn btn-danger remove" href="#">Delete</a>
+            </div>
+        {% endif %}
+    </div>
 {% endmacro %}
 
 {% block form_errors %}
-    {% spaceless %}
-        {% if errors|length > 0 %}
-            <span class="help-inline">
-                {% for error in errors %}
-                    {{ error.message }}
-                {% endfor %}
-            </span>
-        {% endif %}
-    {% endspaceless %}
+    {% if errors|length > 0 %}
+        <span class="help-inline">
+            {% for error in errors %}
+                {{ error.message }}
+            {% endfor %}
+        </span>
+    {% endif %}
 {% endblock form_errors %}
 
 {% block zenstruck_ajax_entity_widget %}
-    {% spaceless %}
-        <input type="hidden" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
-    {% endspaceless %}
+    <input type="hidden" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
 {% endblock %}
 
 {% block zenstruck_tunnel_entity_widget %}
-    {% spaceless %}
-        <div class="input-append zenstruck-tunnel-widget">
-            <input type="hidden" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
-            <span class="uneditable-input zenstruck-tunnel-title">{{ title }}</span>
-            {% if not required %}
-                <a href="#" class="btn zenstruck-tunnel-clear"><b class="icon-remove"></b></a>
-            {% endif %}
-            <a href="#" class="btn zenstruck-tunnel-select"{% if callback %} data-callback="{{ callback }}"{% endif %}>{{ button_text|trans }}</a>
-        </div>
-    {% endspaceless %}
+    <div class="input-append zenstruck-tunnel-widget">
+        <input type="hidden" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+        <span class="uneditable-input zenstruck-tunnel-title">{{ title }}</span>
+        {% if not required %}
+            <a href="#" class="btn zenstruck-tunnel-clear"><b class="icon-remove"></b></a>
+        {% endif %}
+        <a href="#" class="btn zenstruck-tunnel-select"{% if callback %} data-callback="{{ callback }}"{% endif %}>{{ button_text|trans }}</a>
+    </div>
 {% endblock %}
