@@ -38,8 +38,8 @@ class ThemeTypeExtension extends AbstractTypeExtension
         ));
     }
 
-    public function getExtendedType()
+    public static function getExtendedTypes()
     {
-        return FormType::class;
+        return [FormType::class];
     }
 }
