@@ -15,7 +15,7 @@
             <argument>%kernel.secret%</argument>
         </service>
 
-        <service id="zenstruck_form.ajax_entity_controller" class="%zenstruck_form.ajax_entity_controller.class%">
+        <service id="zenstruck_form.ajax_entity_controller" public="true" class="%zenstruck_form.ajax_entity_controller.class%">
             <argument type="service" id="zenstruck_form.ajax_entity_manager" />
         </service>
     </services>
