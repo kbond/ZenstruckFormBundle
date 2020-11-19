@@ -2,7 +2,7 @@
 
 namespace Zenstruck\Bundle\FormBundle\Form;
 
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 use Zend\Crypt\BlockCipher;
 
 /**
