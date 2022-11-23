@@ -25,7 +25,7 @@ class AjaxEntityTransformer implements DataTransformerInterface
         $this->property = $property;
     }
 
-    public function transform($value)
+    public function transform($value): mixed
     {
         if (is_array($value) || $value instanceof Collection) {
             $ret = array();
@@ -50,7 +50,7 @@ class AjaxEntityTransformer implements DataTransformerInterface
         return null;
     }
 
-    public function reverseTransform($value)
+    public function reverseTransform($value): mixed
     {
         if (!$value) {
             return $this->multiple ? array() : null;
