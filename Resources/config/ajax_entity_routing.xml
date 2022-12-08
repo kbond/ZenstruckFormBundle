@@ -5,6 +5,6 @@
         xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
     <route id="zenstruck_ajax_entity" path="/_entity_find" methods="POST">
-        <default key="_controller">zenstruck_form.ajax_entity_controller:findAction</default>
+        <default key="_controller">zenstruck_form.ajax_entity_controller::findAction</default>
     </route>
 </routes>
